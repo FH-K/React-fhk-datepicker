@@ -320,8 +320,17 @@ const TimePicker = ({
     </div>
   );
 
+  // Sanitize className to prevent CSS injection
+  const sanitizeClassName = (className) => {
+    if (!className) return "";
+    // Remove any potentially dangerous characters
+    return className.replace(/[<>"'&]/g, "").trim();
+  };
+
+  const sanitizedClassName = sanitizeClassName(className);
+
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${sanitizedClassName}`}>
       {/* Input Field */}
       <div className="relative">
         <input

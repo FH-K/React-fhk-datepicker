@@ -266,21 +266,37 @@ const DatePicker = ({
     // Validate and format input
     const input = inputValue.trim();
     if (input) {
-      const parsedDate = new Date(input);
-      if (!isNaN(parsedDate.getTime())) {
-        const year = parsedDate.getFullYear();
-        const month = String(parsedDate.getMonth() + 1).padStart(2, "0");
-        const day = String(parsedDate.getDate()).padStart(2, "0");
-        const dateString = `${year}-${month}-${day}`;
+      // Stricter date validation - only allow common date formats
+      const dateRegex = /^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/;
+      const match = input.match(dateRegex);
 
-        if (!isDateDisabled(parsedDate)) {
-          setSelectedDate(dateString);
-          const displayFormat = formatForDisplay(dateString);
-          setDisplayDate(displayFormat);
-          setInputValue(displayFormat);
+      if (match) {
+        const [, month, day, year] = match;
+        const parsedDate = new Date(year, month - 1, day);
 
-          const formattedDate = formatDate(dateString, format);
-          onDateSelect && onDateSelect(formattedDate);
+        // Validate the parsed date matches the input
+        if (
+          !isNaN(parsedDate.getTime()) &&
+          parsedDate.getFullYear() == year &&
+          parsedDate.getMonth() == month - 1 &&
+          parsedDate.getDate() == day
+        ) {
+          const yearStr = String(parsedDate.getFullYear());
+          const monthStr = String(parsedDate.getMonth() + 1).padStart(2, "0");
+          const dayStr = String(parsedDate.getDate()).padStart(2, "0");
+          const dateString = `${yearStr}-${monthStr}-${dayStr}`;
+
+          if (!isDateDisabled(parsedDate)) {
+            setSelectedDate(dateString);
+            const displayFormat = formatForDisplay(dateString);
+            setDisplayDate(displayFormat);
+            setInputValue(displayFormat);
+
+            const formattedDate = formatDate(dateString, format);
+            onDateSelect && onDateSelect(formattedDate);
+          } else {
+            setInputValue(displayDate);
+          }
         } else {
           setInputValue(displayDate);
         }
@@ -443,8 +459,17 @@ const DatePicker = ({
     return `${baseClasses} ${currentVariant.normal}`;
   };
 
+  // Sanitize className to prevent CSS injection
+  const sanitizeClassName = (className) => {
+    if (!className) return "";
+    // Remove any potentially dangerous characters
+    return className.replace(/[<>"'&]/g, "").trim();
+  };
+
+  const sanitizedClassName = sanitizeClassName(className);
+
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${sanitizedClassName}`}>
       {/* Input Field */}
       <div className="relative">
         <input
