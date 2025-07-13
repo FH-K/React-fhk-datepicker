@@ -124,13 +124,12 @@ const DatePicker = ({
   };
 
   const handleDateSelect = (date) => {
-    // Create a new date object to avoid timezone issues
-    const localDate = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
-    );
-    const dateString = localDate.toISOString().split("T")[0];
+    // Create a date string in YYYY-MM-DD format without timezone conversion
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const dateString = `${year}-${month}-${day}`;
+
     setSelectedDate(dateString);
 
     const displayFormat = formatForDisplay(dateString);
@@ -159,16 +158,14 @@ const DatePicker = ({
       // Try to parse the input date
       const parsedDate = new Date(input);
       if (!isNaN(parsedDate.getTime())) {
-        // Create local date to avoid timezone issues
-        const localDate = new Date(
-          parsedDate.getFullYear(),
-          parsedDate.getMonth(),
-          parsedDate.getDate()
-        );
-        const dateString = localDate.toISOString().split("T")[0];
+        // Create date string in YYYY-MM-DD format without timezone conversion
+        const year = parsedDate.getFullYear();
+        const month = String(parsedDate.getMonth() + 1).padStart(2, "0");
+        const day = String(parsedDate.getDate()).padStart(2, "0");
+        const dateString = `${year}-${month}-${day}`;
 
         // Check if date is within restrictions
-        if (!isDateDisabled(localDate)) {
+        if (!isDateDisabled(parsedDate)) {
           setSelectedDate(dateString);
           const displayFormat = formatForDisplay(dateString);
           setDisplayDate(displayFormat);
