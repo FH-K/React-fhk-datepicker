@@ -14,6 +14,14 @@ const DateRangePicker = ({
   theme = "light",
   startDate = null,
   endDate = null,
+  // New props
+  size = "md", // "sm", "md", "lg"
+  variant = "outline", // "outline", "filled", "ghost"
+  showClearButton = true,
+  showTodayButton = true,
+  autoFocus = false,
+  error = false,
+  helperText = "",
 }) => {
   const [startDateValue, setStartDateValue] = useState(startDate || "");
   const [endDateValue, setEndDateValue] = useState(endDate || "");
@@ -165,6 +173,13 @@ const DateRangePicker = ({
           minDate={minDate}
           maxDate={getStartMaxDate()}
           theme={theme}
+          size={size}
+          variant={variant}
+          showClearButton={showClearButton}
+          showTodayButton={showTodayButton}
+          autoFocus={autoFocus}
+          error={error}
+          helperText={helperText}
         />
       </div>
 
@@ -182,6 +197,13 @@ const DateRangePicker = ({
           minDate={getEndMinDate()}
           maxDate={maxDate}
           theme={theme}
+          size={size}
+          variant={variant}
+          showClearButton={showClearButton}
+          showTodayButton={showTodayButton}
+          autoFocus={false}
+          error={error}
+          helperText={helperText}
         />
       </div>
 

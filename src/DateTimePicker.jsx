@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "./DatePicker.jsx";
+import TimePicker from "./TimePicker.jsx"; // Import the enhanced TimePicker
 
 const DateTimePicker = ({
   onDateTimeSelect,
@@ -14,6 +15,16 @@ const DateTimePicker = ({
   theme = "light",
   date = null,
   time = null,
+  // Enhanced props
+  size = "md", // "sm", "md", "lg"
+  variant = "outline", // "outline", "filled", "ghost"
+  showClearButton = true,
+  showTodayButton = true,
+  autoFocus = false,
+  error = false,
+  helperText = "",
+  timeFormat = "24", // "12" or "24"
+  timeStep = "1", // "1" for seconds, "60" for minutes only
 }) => {
   const [dateValue, setDateValue] = useState(date || "");
   const [timeValue, setTimeValue] = useState(time || "");
@@ -64,8 +75,12 @@ const DateTimePicker = ({
     <div className={`space-y-4 ${className}`}>
       {/* Date Picker */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Date
+        <label
+          className={`block text-sm font-medium mb-2 ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          }`}
+        >
+          📅 Date
         </label>
         <DatePicker
           onDateSelect={handleDateSelect}
@@ -76,46 +91,86 @@ const DateTimePicker = ({
           minDate={minDate}
           maxDate={maxDate}
           theme={theme}
+          size={size}
+          variant={variant}
+          showClearButton={showClearButton}
+          showTodayButton={showTodayButton}
+          autoFocus={autoFocus}
+          error={error}
+          helperText={helperText}
         />
       </div>
 
-      {/* Time Input */}
+      {/* Enhanced Time Picker */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Time
+        <label
+          className={`block text-sm font-medium mb-2 ${
+            theme === "dark" ? "text-gray-300" : "text-gray-700"
+          }`}
+        >
+          🕐 Time
         </label>
-        <input
-          type="time"
-          step="1"
+        <TimePicker
           value={timeValue}
           onChange={handleTimeChange}
           placeholder={timePlaceholder}
           disabled={disabled}
-          className={`
-            w-full px-4 py-3 border rounded-lg transition-all duration-200
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-            ${
-              theme === "dark"
-                ? "bg-gray-800 border-gray-600 text-white"
-                : "bg-white border-gray-300 text-gray-900"
-            }
-            ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-          `}
+          theme={theme}
+          size={size}
+          variant={variant}
+          format={timeFormat}
+          step={timeStep}
+          error={error}
+          helperText=""
         />
       </div>
 
       {/* DateTime Display */}
       {(dateValue || timeValue) && (
-        <div className="mt-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
-          <div className="text-sm text-purple-800">
-            <strong>Selected Date-Time:</strong>
-            <div className="mt-1 font-mono text-xs">
-              {dateValue ? `Date: ${dateValue}` : "Date: Not selected"}
-              {timeValue && ` | Time: ${timeValue}`}
+        <div
+          className={`mt-4 p-4 rounded-xl border-2 transition-all duration-200 ${
+            theme === "dark"
+              ? "bg-purple-900/30 border-purple-700"
+              : "bg-purple-50 border-purple-200"
+          }`}
+        >
+          <div
+            className={`text-sm ${
+              theme === "dark" ? "text-purple-300" : "text-purple-800"
+            }`}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-lg">✨</span>
+              <strong>Selected Date-Time</strong>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div
+                className={`p-3 rounded-lg font-mono text-xs ${
+                  theme === "dark" ? "bg-purple-800/50" : "bg-purple-100"
+                }`}
+              >
+                <div className="font-medium text-xs uppercase tracking-wide mb-1 opacity-75">
+                  Date
+                </div>
+                {dateValue || "Not selected"}
+              </div>
+              <div
+                className={`p-3 rounded-lg font-mono text-xs ${
+                  theme === "dark" ? "bg-purple-800/50" : "bg-purple-100"
+                }`}
+              >
+                <div className="font-medium text-xs uppercase tracking-wide mb-1 opacity-75">
+                  Time
+                </div>
+                {timeValue || "Not selected"}
+              </div>
             </div>
             {dateValue && (
-              <div className="mt-2 text-xs">
-                <span className="text-green-600">✅ Valid date-time</span>
+              <div className="mt-3 flex items-center gap-2">
+                <span className="text-green-600">✅</span>
+                <span className="text-xs font-medium">
+                  Valid date-time combination
+                </span>
               </div>
             )}
           </div>

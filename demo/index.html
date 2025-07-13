@@ -3,68 +3,189 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>React FHK DatePicker Demo</title>
+    <title>Enhanced React FHK DatePicker - Complete Demo with Dark Mode</title>
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {},
+        },
+      };
+    </script>
     <style>
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
           sans-serif;
         margin: 0;
         padding: 20px;
-        background-color: #f5f5f5;
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
+
+      .light-mode {
+        background-color: #f5f5f5;
+        color: #1f2937;
+      }
+
+      .dark-mode {
+        background-color: #111827;
+        color: #f9fafb;
+      }
+
       .container {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
-        background: white;
         padding: 30px;
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
       }
+
+      .light-mode .container {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .dark-mode .container {
+        background: #1f2937;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+      }
+
       .demo-section {
         margin-bottom: 30px;
         padding: 20px;
-        border: 1px solid #e5e7eb;
+        border: 1px solid;
         border-radius: 8px;
-        background-color: #fafafa;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
       }
+
+      .light-mode .demo-section {
+        background-color: #fafafa;
+        border-color: #e5e7eb;
+      }
+
+      .dark-mode .demo-section {
+        background-color: #374151;
+        border-color: #4b5563;
+      }
+
       .demo-title {
         font-size: 18px;
         font-weight: 600;
         margin-bottom: 15px;
+        transition: color 0.3s ease;
+      }
+
+      .light-mode .demo-title {
         color: #374151;
       }
+
+      .dark-mode .demo-title {
+        color: #f9fafb;
+      }
+
       .format-display {
         margin-top: 10px;
         padding: 10px;
-        background-color: #f3f4f6;
         border-radius: 5px;
         font-family: monospace;
         font-size: 12px;
         word-break: break-all;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
       }
+
+      .light-mode .format-display {
+        background-color: #f3f4f6;
+        border: 1px solid #d1d5db;
+      }
+
+      .dark-mode .format-display {
+        background-color: #4b5563;
+        border: 1px solid #6b7280;
+        color: #e5e7eb;
+      }
+
       .feature-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 20px;
         margin-top: 20px;
       }
+
+      .enhanced-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+      }
+
+      .enhanced-section .demo-title {
+        color: white;
+      }
+
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        padding: 12px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .light-mode .theme-toggle {
+        background: #374151;
+        color: #fbbf24;
+      }
+
+      .dark-mode .theme-toggle {
+        background: #fbbf24;
+        color: #374151;
+      }
+
+      .theme-toggle:hover {
+        transform: scale(1.1);
+      }
     </style>
   </head>
-  <body>
+  <body class="light-mode">
+    <button class="theme-toggle" id="themeToggle">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          class="sun-icon"
+          d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"
+        />
+        <path
+          class="moon-icon"
+          style="display: none"
+          d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 01.818.162z"
+        />
+      </svg>
+    </button>
+
     <div class="container">
-      <h1 class="text-3xl font-bold mb-6 text-center">
-        React FHK DatePicker - Type One, Two & Three Demo
+      <h1
+        class="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+      >
+        🎨 Enhanced React FHK DatePicker - Complete Demo with Dark Mode
       </h1>
 
       <div class="demo-section">
         <div class="demo-title">🎯 DatePicker Components</div>
-        <p class="text-gray-600 mb-4">
-          Type One: Single date picker | Type Two: Date range picker | Type
-          Three: Date-time range picker
+        <p class="text-gray-600 dark:text-gray-300 mb-4">
+          <strong>Type One:</strong> Single date picker |
+          <strong>Type Two:</strong> Date range picker |
+          <strong>Type Three:</strong> Date-time range picker
+          <br />
+          <span class="text-purple-600 font-semibold"
+            >✨ NEW: Enhanced Time Pickers with beautiful scrollable UI + Dark
+            Mode!</span
+          >
         </p>
       </div>
 
@@ -73,6 +194,954 @@
 
     <script src="../dist/index.js"></script>
     <script type="text/babel">
+      // Theme management
+      const ThemeContext = React.createContext();
+
+      const ThemeProvider = ({ children }) => {
+        const [isDark, setIsDark] = React.useState(false);
+
+        React.useEffect(() => {
+          // Listen for theme changes from the toggle button
+          const handleThemeChange = (event) => {
+            setIsDark(event.detail.theme === "dark");
+          };
+
+          window.addEventListener("themeChange", handleThemeChange);
+          return () =>
+            window.removeEventListener("themeChange", handleThemeChange);
+        }, []);
+
+        return (
+          <ThemeContext.Provider value={{ isDark }}>
+            {children}
+          </ThemeContext.Provider>
+        );
+      };
+
+      const useTheme = () => React.useContext(ThemeContext);
+
+      // Enhanced TimePicker Component (Fixed Focus Issue)
+      const TimePicker = ({
+        value = "",
+        onChange,
+        placeholder = "Select time",
+        disabled = false,
+        theme = "light",
+        size = "md",
+        variant = "outline",
+        format = "24",
+        step = "1",
+        className = "",
+        error = false,
+        helperText = "",
+      }) => {
+        const [isOpen, setIsOpen] = React.useState(false);
+        const [selectedHour, setSelectedHour] = React.useState("");
+        const [selectedMinute, setSelectedMinute] = React.useState("");
+        const [selectedSecond, setSelectedSecond] = React.useState("");
+        const [selectedPeriod, setSelectedPeriod] = React.useState("AM");
+        const [inputValue, setInputValue] = React.useState("");
+
+        const timePickerRef = React.useRef(null);
+        const inputRef = React.useRef(null);
+
+        // Size configurations
+        const sizes = {
+          sm: {
+            input: "px-3 py-2 text-sm",
+            dropdown: "w-64",
+            icon: "w-4 h-4",
+            scrollHeight: "h-32",
+          },
+          md: {
+            input: "px-4 py-3 text-base",
+            dropdown: "w-72",
+            icon: "w-5 h-5",
+            scrollHeight: "h-36",
+          },
+          lg: {
+            input: "px-5 py-4 text-lg",
+            dropdown: "w-80",
+            icon: "w-6 h-6",
+            scrollHeight: "h-40",
+          },
+        };
+
+        const currentSize = sizes[size];
+
+        // Variant configurations
+        const variants = {
+          outline: {
+            base: "border-2 bg-white dark:bg-gray-800",
+            normal:
+              "border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500",
+            focus:
+              "border-blue-500 dark:border-blue-400 ring-4 ring-blue-100 dark:ring-blue-900",
+            error:
+              "border-red-500 dark:border-red-400 ring-4 ring-red-100 dark:ring-red-900",
+            disabled:
+              "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800",
+          },
+          filled: {
+            base: "border-0 bg-gray-100 dark:bg-gray-700",
+            normal: "hover:bg-gray-200 dark:hover:bg-gray-600",
+            focus:
+              "bg-white dark:bg-gray-800 ring-4 ring-blue-100 dark:ring-blue-900 shadow-md",
+            error:
+              "bg-red-50 dark:bg-red-900/20 ring-4 ring-red-100 dark:ring-red-900",
+            disabled: "bg-gray-100 dark:bg-gray-800 opacity-60",
+          },
+          ghost: {
+            base: "border-0 bg-transparent",
+            normal: "hover:bg-gray-100 dark:hover:bg-gray-800",
+            focus:
+              "bg-white dark:bg-gray-800 ring-4 ring-blue-100 dark:ring-blue-900 shadow-lg",
+            error:
+              "bg-red-50 dark:bg-red-900/20 ring-4 ring-red-100 dark:ring-red-900",
+            disabled: "bg-gray-50 dark:bg-gray-800 opacity-60",
+          },
+        };
+
+        const currentVariant = variants[variant];
+
+        // Theme configurations
+        const themes = {
+          light: {
+            dropdown: "bg-white border-gray-200 shadow-xl",
+            header: "bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-800",
+            scrollArea: "bg-gray-50",
+            item: "hover:bg-blue-50 text-gray-700 hover:text-blue-600",
+            selectedItem: "bg-blue-500 text-white",
+            input: "text-gray-900 placeholder-gray-500",
+            clear: "text-gray-400 hover:text-red-500",
+          },
+          dark: {
+            dropdown: "bg-gray-900 border-gray-700 shadow-xl shadow-black/20",
+            header: "bg-gradient-to-r from-gray-800 to-gray-700 text-white",
+            scrollArea: "bg-gray-800",
+            item: "hover:bg-gray-700 text-gray-300 hover:text-blue-400",
+            selectedItem: "bg-blue-600 text-white",
+            input: "text-white placeholder-gray-400",
+            clear: "text-gray-500 hover:text-red-400",
+          },
+        };
+
+        const currentTheme = themes[theme];
+
+        // Generate time options
+        const generateHours = () => {
+          const hours = [];
+          const maxHour = format === "12" ? 12 : 23;
+          const startHour = format === "12" ? 1 : 0;
+          for (let i = startHour; i <= maxHour; i++) {
+            hours.push(String(i).padStart(2, "0"));
+          }
+          return hours;
+        };
+
+        const generateMinutes = () => {
+          const minutes = [];
+          for (let i = 0; i < 60; i++) {
+            minutes.push(String(i).padStart(2, "0"));
+          }
+          return minutes;
+        };
+
+        const generateSeconds = () => {
+          const seconds = [];
+          for (let i = 0; i < 60; i++) {
+            seconds.push(String(i).padStart(2, "0"));
+          }
+          return seconds;
+        };
+
+        // Parse time value
+        React.useEffect(() => {
+          if (value) {
+            const [hours, minutes, seconds] = value.split(":");
+
+            if (format === "12") {
+              const hour24 = parseInt(hours);
+              const hour12 =
+                hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
+              const period = hour24 >= 12 ? "PM" : "AM";
+
+              setSelectedHour(String(hour12).padStart(2, "0"));
+              setSelectedPeriod(period);
+            } else {
+              setSelectedHour(hours);
+            }
+
+            setSelectedMinute(minutes || "00");
+            setSelectedSecond(seconds || "00");
+
+            const displayValue =
+              format === "12"
+                ? `${String(format === "12" ? selectedHour : hours).padStart(
+                    2,
+                    "0"
+                  )}:${minutes || "00"}${
+                    step === "1" ? `:${seconds || "00"}` : ""
+                  } ${
+                    format === "12" ? (parseInt(hours) >= 12 ? "PM" : "AM") : ""
+                  }`
+                : `${hours}:${minutes || "00"}${
+                    step === "1" ? `:${seconds || "00"}` : ""
+                  }`;
+
+            setInputValue(displayValue);
+          } else {
+            setInputValue("");
+            setSelectedHour("");
+            setSelectedMinute("");
+            setSelectedSecond("");
+            setSelectedPeriod("AM");
+          }
+        }, [value, format, step]);
+
+        // Handle time selection
+        const handleTimeSelect = (type, val) => {
+          let newHour = selectedHour;
+          let newMinute = selectedMinute;
+          let newSecond = selectedSecond;
+          let newPeriod = selectedPeriod;
+
+          switch (type) {
+            case "hour":
+              newHour = val;
+              setSelectedHour(val);
+              break;
+            case "minute":
+              newMinute = val;
+              setSelectedMinute(val);
+              break;
+            case "second":
+              newSecond = val;
+              setSelectedSecond(val);
+              break;
+            case "period":
+              newPeriod = val;
+              setSelectedPeriod(val);
+              break;
+          }
+
+          // Convert to 24-hour format for output
+          let outputHour = newHour;
+          if (format === "12" && newHour) {
+            const hour12 = parseInt(newHour);
+            if (newPeriod === "PM" && hour12 !== 12) {
+              outputHour = String(hour12 + 12).padStart(2, "0");
+            } else if (newPeriod === "AM" && hour12 === 12) {
+              outputHour = "00";
+            }
+          }
+
+          // Build time string
+          if (newHour && newMinute) {
+            const timeString =
+              step === "1"
+                ? `${outputHour}:${newMinute}:${newSecond || "00"}`
+                : `${outputHour}:${newMinute}:00`;
+
+            onChange && onChange({ target: { value: timeString } });
+
+            const displayValue =
+              format === "12"
+                ? `${newHour}:${newMinute}${
+                    step === "1" ? `:${newSecond || "00"}` : ""
+                  } ${newPeriod}`
+                : `${outputHour}:${newMinute}${
+                    step === "1" ? `:${newSecond || "00"}` : ""
+                  }`;
+
+            setInputValue(displayValue);
+          }
+        };
+
+        const handleClear = (e) => {
+          e.stopPropagation(); // Prevent opening dropdown when clearing
+          setInputValue("");
+          setSelectedHour("");
+          setSelectedMinute("");
+          setSelectedSecond("");
+          setSelectedPeriod("AM");
+          onChange && onChange({ target: { value: "" } });
+        };
+
+        // Close dropdown when clicking outside
+        React.useEffect(() => {
+          const handleClickOutside = (event) => {
+            if (
+              timePickerRef.current &&
+              !timePickerRef.current.contains(event.target) &&
+              inputRef.current &&
+              !inputRef.current.contains(event.target)
+            ) {
+              setIsOpen(false);
+            }
+          };
+
+          document.addEventListener("mousedown", handleClickOutside);
+          return () =>
+            document.removeEventListener("mousedown", handleClickOutside);
+        }, []);
+
+        const getInputClasses = () => {
+          const baseClasses = `
+            w-full pr-10 rounded-xl transition-all duration-200 font-medium
+            focus:outline-none placeholder:font-normal cursor-pointer
+            ${currentSize.input} ${currentVariant.base}
+          `;
+
+          if (disabled) {
+            return `${baseClasses} ${currentVariant.disabled} cursor-not-allowed`;
+          }
+          if (error) {
+            return `${baseClasses} ${currentVariant.error}`;
+          }
+          if (isOpen) {
+            return `${baseClasses} ${currentVariant.focus}`;
+          }
+          return `${baseClasses} ${currentVariant.normal}`;
+        };
+
+        const ScrollableList = ({ items, selected, onSelect, type }) => (
+          <div
+            className={`${currentSize.scrollHeight} overflow-y-auto ${currentTheme.scrollArea} rounded-lg`}
+          >
+            {items.map((item) => (
+              <button
+                key={item}
+                onClick={() => handleTimeSelect(type, item)}
+                className={`
+                  w-full px-3 py-2 text-sm font-medium transition-all duration-150 text-center
+                  ${
+                    selected === item
+                      ? currentTheme.selectedItem
+                      : currentTheme.item
+                  }
+                  hover:scale-105 active:scale-95
+                `}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+        );
+
+        return (
+          <div className={`relative ${className}`}>
+            <div className="relative">
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onClick={() => !disabled && setIsOpen(!isOpen)}
+                placeholder={placeholder}
+                disabled={disabled}
+                readOnly
+                className={`${getInputClasses()} ${currentTheme.input}`}
+              />
+
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 space-x-1">
+                {inputValue && !disabled && (
+                  <button
+                    type="button"
+                    onClick={handleClear}
+                    className={`${currentTheme.clear} transition-colors duration-150 hover:scale-110`}
+                  >
+                    <svg
+                      className={currentSize.icon}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                )}
+
+                <div
+                  className={`text-gray-400 dark:text-gray-500 ${
+                    disabled ? "opacity-50" : ""
+                  }`}
+                >
+                  <svg
+                    className={currentSize.icon}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {helperText && (
+              <p
+                className={`mt-1 text-xs ${
+                  error
+                    ? "text-red-600 dark:text-red-400"
+                    : "text-gray-500 dark:text-gray-400"
+                }`}
+              >
+                {helperText}
+              </p>
+            )}
+
+            {isOpen && (
+              <div
+                ref={timePickerRef}
+                className={`
+                  absolute top-full left-0 z-50 mt-2 rounded-2xl border transition-all duration-300
+                  ${currentSize.dropdown} ${currentTheme.dropdown}
+                  opacity-100 scale-100 translate-y-0
+                `}
+                style={{
+                  transformOrigin: "top left",
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                }}
+              >
+                <div
+                  className={`p-4 rounded-t-2xl ${currentTheme.header} border-b border-gray-200 dark:border-gray-600`}
+                >
+                  <h3 className="text-center font-bold">Select Time</h3>
+                </div>
+
+                <div className="p-4">
+                  <div
+                    className={`grid ${
+                      format === "12"
+                        ? "grid-cols-4"
+                        : step === "1"
+                        ? "grid-cols-3"
+                        : "grid-cols-2"
+                    } gap-3`}
+                  >
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 text-center uppercase tracking-wider">
+                        Hour
+                      </label>
+                      <ScrollableList
+                        items={generateHours()}
+                        selected={selectedHour}
+                        onSelect={handleTimeSelect}
+                        type="hour"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 text-center uppercase tracking-wider">
+                        Min
+                      </label>
+                      <ScrollableList
+                        items={generateMinutes()}
+                        selected={selectedMinute}
+                        onSelect={handleTimeSelect}
+                        type="minute"
+                      />
+                    </div>
+
+                    {step === "1" && (
+                      <div>
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 text-center uppercase tracking-wider">
+                          Sec
+                        </label>
+                        <ScrollableList
+                          items={generateSeconds()}
+                          selected={selectedSecond}
+                          onSelect={handleTimeSelect}
+                          type="second"
+                        />
+                      </div>
+                    )}
+
+                    {format === "12" && (
+                      <div>
+                        <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-2 text-center uppercase tracking-wider">
+                          Period
+                        </label>
+                        <div className="space-y-1">
+                          {["AM", "PM"].map((period) => (
+                            <button
+                              key={period}
+                              onClick={() => handleTimeSelect("period", period)}
+                              className={`
+                                w-full px-3 py-2 text-sm font-medium rounded-lg transition-all duration-150
+                                ${
+                                  selectedPeriod === period
+                                    ? currentTheme.selectedItem
+                                    : currentTheme.item
+                                }
+                                hover:scale-105 active:scale-95
+                              `}
+                            >
+                              {period}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center p-4 border-t border-gray-200 dark:border-gray-600">
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="px-4 py-2 text-sm font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-all duration-150"
+                  >
+                    Done
+                  </button>
+
+                  <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                    {format === "12" ? "12H" : "24H"} •{" "}
+                    {step === "1" ? "HH:MM:SS" : "HH:MM"}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      // Enhanced DateTimePicker Component with TimePicker
+      const EnhancedDateTimePicker = ({
+        onDateTimeSelect,
+        datePlaceholder = "Select date",
+        timePlaceholder = "Select time",
+        format = "simple",
+        separator = "/",
+        className = "",
+        disabled = false,
+        minDate = null,
+        maxDate = null,
+        theme = "light",
+        date = null,
+        time = null,
+        size = "md",
+        variant = "outline",
+        showClearButton = true,
+        showTodayButton = true,
+        autoFocus = false,
+        error = false,
+        helperText = "",
+        timeFormat = "24",
+        timeStep = "1",
+      }) => {
+        const [dateValue, setDateValue] = React.useState(date || "");
+        const [timeValue, setTimeValue] = React.useState(time || "");
+
+        const { DatePicker } = ReactFhkDatepicker;
+
+        const handleDateSelect = (selectedDate) => {
+          setDateValue(selectedDate);
+          const dateTime = {
+            date: selectedDate,
+            time: timeValue,
+            isValid: !!selectedDate,
+          };
+          onDateTimeSelect && onDateTimeSelect(dateTime);
+        };
+
+        const handleTimeChange = (e) => {
+          const time = e.target.value;
+          setTimeValue(time);
+          const dateTime = {
+            date: dateValue,
+            time: time,
+            isValid: !!dateValue,
+          };
+          onDateTimeSelect && onDateTimeSelect(dateTime);
+        };
+
+        return (
+          <div className={`space-y-4 ${className}`}>
+            <div>
+              <label
+                className={`block text-sm font-medium mb-2 ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                📅 Date (Enhanced)
+              </label>
+              <DatePicker
+                onDateSelect={handleDateSelect}
+                placeholder={datePlaceholder}
+                format={format}
+                separator={separator}
+                disabled={disabled}
+                minDate={minDate}
+                maxDate={maxDate}
+                theme={theme}
+                size={size}
+                variant={variant}
+                showClearButton={showClearButton}
+                showTodayButton={showTodayButton}
+                autoFocus={autoFocus}
+                error={error}
+                helperText={helperText}
+              />
+            </div>
+
+            <div>
+              <label
+                className={`block text-sm font-medium mb-2 ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                🕐 Time (Enhanced with Scrollable UI)
+              </label>
+              <TimePicker
+                value={timeValue}
+                onChange={handleTimeChange}
+                placeholder={timePlaceholder}
+                disabled={disabled}
+                theme={theme}
+                size={size}
+                variant={variant}
+                format={timeFormat}
+                step={timeStep}
+                error={error}
+                helperText=""
+              />
+            </div>
+
+            {(dateValue || timeValue) && (
+              <div
+                className={`mt-4 p-4 rounded-xl border-2 transition-all duration-200 ${
+                  theme === "dark"
+                    ? "bg-purple-900/30 border-purple-700"
+                    : "bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200"
+                }`}
+              >
+                <div
+                  className={`text-sm ${
+                    theme === "dark" ? "text-purple-300" : "text-purple-800"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg">✨</span>
+                    <strong>Enhanced Date-Time Selection</strong>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div
+                      className={`p-3 rounded-lg font-mono text-xs ${
+                        theme === "dark" ? "bg-purple-800/50" : "bg-purple-100"
+                      }`}
+                    >
+                      <div className="font-medium text-xs uppercase tracking-wide mb-1 opacity-75">
+                        Date
+                      </div>
+                      {dateValue || "Not selected"}
+                    </div>
+                    <div
+                      className={`p-3 rounded-lg font-mono text-xs ${
+                        theme === "dark" ? "bg-purple-800/50" : "bg-purple-100"
+                      }`}
+                    >
+                      <div className="font-medium text-xs uppercase tracking-wide mb-1 opacity-75">
+                        Time
+                      </div>
+                      {timeValue || "Not selected"}
+                    </div>
+                  </div>
+                  {dateValue && (
+                    <div className="mt-3 flex items-center gap-2">
+                      <span className="text-green-600">✅</span>
+                      <span className="text-xs font-medium">
+                        Valid enhanced date-time combination
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      };
+
+      // Enhanced DateTimeRangePicker Component with TimePickers
+      const EnhancedDateTimeRangePicker = ({
+        onDateTimeRangeSelect,
+        startDatePlaceholder = "Start date",
+        endDatePlaceholder = "End date",
+        startTimePlaceholder = "Start time",
+        endTimePlaceholder = "End time",
+        format = "simple",
+        separator = "/",
+        className = "",
+        disabled = false,
+        minDate = null,
+        maxDate = null,
+        theme = "light",
+        startDate = null,
+        endDate = null,
+        startTime = null,
+        endTime = null,
+        size = "md",
+        variant = "outline",
+        showClearButton = true,
+        showTodayButton = true,
+        autoFocus = false,
+        error = false,
+        helperText = "",
+        timeFormat = "24",
+        timeStep = "1",
+      }) => {
+        const [startDateValue, setStartDateValue] = React.useState(
+          startDate || ""
+        );
+        const [endDateValue, setEndDateValue] = React.useState(endDate || "");
+        const [startTimeValue, setStartTimeValue] = React.useState(
+          startTime || ""
+        );
+        const [endTimeValue, setEndTimeValue] = React.useState(endTime || "");
+
+        const { DateRangePicker } = ReactFhkDatepicker;
+
+        const handleDateRangeSelect = (range) => {
+          setStartDateValue(range.start || "");
+          setEndDateValue(range.end || "");
+
+          let formattedStartDate = range.start;
+          let formattedEndDate = range.end;
+
+          if (format === "iso" && range.start && startTimeValue) {
+            const startDateTime = new Date(range.start);
+            const [startHours, startMinutes, startSeconds] = startTimeValue
+              .split(":")
+              .map(Number);
+            startDateTime.setUTCHours(
+              startHours,
+              startMinutes,
+              startSeconds || 0,
+              0
+            );
+            formattedStartDate = startDateTime.toISOString();
+          }
+
+          if (format === "iso" && range.end && endTimeValue) {
+            const endDateTime = new Date(range.end);
+            const [endHours, endMinutes, endSeconds] = endTimeValue
+              .split(":")
+              .map(Number);
+            endDateTime.setUTCHours(endHours, endMinutes, endSeconds || 0, 999);
+            formattedEndDate = endDateTime.toISOString();
+          }
+
+          const dateTimeRange = {
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
+            startTime: startTimeValue,
+            endTime: endTimeValue,
+            isValid: range.isValid,
+          };
+
+          onDateTimeRangeSelect && onDateTimeRangeSelect(dateTimeRange);
+        };
+
+        const handleStartTimeChange = (e) => {
+          const time = e.target.value;
+          setStartTimeValue(time);
+        };
+
+        const handleEndTimeChange = (e) => {
+          const time = e.target.value;
+          setEndTimeValue(time);
+        };
+
+        return (
+          <div className={`space-y-6 ${className}`}>
+            <div
+              className={`p-4 rounded-xl border-2 ${
+                theme === "dark"
+                  ? "bg-gray-800/50 border-gray-700"
+                  : "bg-gray-50 border-gray-200"
+              }`}
+            >
+              <div
+                className={`text-sm font-medium mb-3 ${
+                  theme === "dark" ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                📅 Select Date Range
+              </div>
+              <DateRangePicker
+                onRangeSelect={handleDateRangeSelect}
+                startPlaceholder={startDatePlaceholder}
+                endPlaceholder={endDatePlaceholder}
+                format={format}
+                separator={separator}
+                disabled={disabled}
+                minDate={minDate}
+                maxDate={maxDate}
+                theme={theme}
+                startDate={startDateValue}
+                endDate={endDateValue}
+                size={size}
+                variant={variant}
+                showClearButton={showClearButton}
+                showTodayButton={showTodayButton}
+                autoFocus={autoFocus}
+                error={error}
+                helperText={helperText}
+              />
+            </div>
+
+            <div
+              className={`p-4 rounded-xl border-2 ${
+                theme === "dark"
+                  ? "bg-blue-900/30 border-blue-700"
+                  : "bg-blue-50 border-blue-200"
+              }`}
+            >
+              <div
+                className={`text-sm font-medium mb-3 ${
+                  theme === "dark" ? "text-blue-300" : "text-blue-700"
+                }`}
+              >
+                🕐 Select Time Range (Enhanced Scrollable UI)
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-2 ${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    ⏰ Start Time
+                  </label>
+                  <TimePicker
+                    value={startTimeValue}
+                    onChange={handleStartTimeChange}
+                    placeholder={startTimePlaceholder}
+                    disabled={disabled}
+                    theme={theme}
+                    size={size}
+                    variant={variant}
+                    format={timeFormat}
+                    step={timeStep}
+                    error={error}
+                    helperText=""
+                  />
+                </div>
+
+                <div>
+                  <label
+                    className={`block text-sm font-medium mb-2 ${
+                      theme === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    ⏱️ End Time
+                  </label>
+                  <TimePicker
+                    value={endTimeValue}
+                    onChange={handleEndTimeChange}
+                    placeholder={endTimePlaceholder}
+                    disabled={disabled}
+                    theme={theme}
+                    size={size}
+                    variant={variant}
+                    format={timeFormat}
+                    step={timeStep}
+                    error={error}
+                    helperText=""
+                  />
+                </div>
+              </div>
+            </div>
+
+            {(startDateValue ||
+              endDateValue ||
+              startTimeValue ||
+              endTimeValue) && (
+              <div
+                className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                  theme === "dark"
+                    ? "bg-indigo-900/30 border-indigo-700"
+                    : "bg-gradient-to-r from-indigo-50 to-purple-50 border-indigo-200"
+                }`}
+              >
+                <div
+                  className={`text-sm ${
+                    theme === "dark" ? "text-indigo-300" : "text-indigo-800"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg">🎯</span>
+                    <strong>Enhanced Date-Time Range Selection</strong>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div
+                      className={`p-3 rounded-lg ${
+                        theme === "dark" ? "bg-indigo-800/50" : "bg-indigo-100"
+                      }`}
+                    >
+                      <div className="font-medium text-xs uppercase tracking-wide mb-2 opacity-75">
+                        🟢 Start
+                      </div>
+                      <div className="space-y-1">
+                        <div className="font-mono text-xs">
+                          <span className="opacity-75">Date:</span>{" "}
+                          {startDateValue || "Not selected"}
+                        </div>
+                        <div className="font-mono text-xs">
+                          <span className="opacity-75">Time:</span>{" "}
+                          {startTimeValue || "Not selected"}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      className={`p-3 rounded-lg ${
+                        theme === "dark" ? "bg-indigo-800/50" : "bg-indigo-100"
+                      }`}
+                    >
+                      <div className="font-medium text-xs uppercase tracking-wide mb-2 opacity-75">
+                        🔴 End
+                      </div>
+                      <div className="space-y-1">
+                        <div className="font-mono text-xs">
+                          <span className="opacity-75">Date:</span>{" "}
+                          {endDateValue || "Not selected"}
+                        </div>
+                        <div className="font-mono text-xs">
+                          <span className="opacity-75">Time:</span>{" "}
+                          {endTimeValue || "Not selected"}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {startDateValue && endDateValue && (
+                    <div className="mt-3 flex items-center gap-2">
+                      <span className="text-green-600">✅</span>
+                      <span className="text-xs font-medium">
+                        Enhanced date-time range selected
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      };
+
       const {
         DatePicker,
         DateRangePicker,
@@ -81,6 +1150,9 @@
       } = ReactFhkDatepicker;
 
       function Demo() {
+        const { isDark } = useTheme();
+        const currentTheme = isDark ? "dark" : "light";
+
         // Type One states
         const [simpleDate, setSimpleDate] = React.useState("");
         const [isoDate, setIsoDate] = React.useState("");
@@ -89,13 +1161,18 @@
         const [range1, setRange1] = React.useState({});
         const [range2, setRange2] = React.useState({});
         const [range3, setRange3] = React.useState({});
-        const [range4, setRange4] = React.useState({}); // Added for new example
+        const [range4, setRange4] = React.useState({});
 
         // Type Three states
         const [dateTimeRange1, setDateTimeRange1] = React.useState({});
         const [dateTimeRange2, setDateTimeRange2] = React.useState({});
         const [timeOnlyRange, setTimeOnlyRange] = React.useState({});
-        const [timeOnlyRangeISO, setTimeOnlyRangeISO] = React.useState({}); // Added for new example
+        const [timeOnlyRangeISO, setTimeOnlyRangeISO] = React.useState({});
+
+        // Enhanced components states
+        const [enhancedDateTime, setEnhancedDateTime] = React.useState({});
+        const [enhancedDateTimeRange, setEnhancedDateTimeRange] =
+          React.useState({});
 
         // Type One handlers
         const handleSimpleDate = (date) => {
@@ -125,7 +1202,6 @@
         };
 
         const handleRange4 = (range) => {
-          // Added for new example
           setRange4(range);
           console.log("Range 4:", range);
         };
@@ -151,6 +1227,17 @@
           console.log("Time Only Range ISO:", range);
         };
 
+        // Enhanced handlers
+        const handleEnhancedDateTime = (range) => {
+          setEnhancedDateTime(range);
+          console.log("Enhanced DateTime:", range);
+        };
+
+        const handleEnhancedDateTimeRange = (range) => {
+          setEnhancedDateTimeRange(range);
+          console.log("Enhanced DateTime Range:", range);
+        };
+
         return (
           <div className="space-y-8">
             {/* Type One: Single DatePicker */}
@@ -158,9 +1245,19 @@
               <div className="demo-title">📅 Type One: Single DatePicker</div>
               <div className="feature-grid">
                 {/* Simple Format */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">1. Simple Format</div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     UI: MM/DD/YYYY | Store: YYYY/MM/DD
                   </p>
                   <DatePicker
@@ -168,6 +1265,7 @@
                     placeholder="Choose a date"
                     format="simple"
                     separator="/"
+                    theme={currentTheme}
                   />
                   {simpleDate && (
                     <div className="format-display">
@@ -175,7 +1273,13 @@
                     </div>
                   )}
                   {simpleDate && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -186,9 +1290,19 @@
                 </div>
 
                 {/* ISO Format */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">2. ISO Format</div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     UI: MM/DD/YYYY | Store: ISO String
                   </p>
                   <DatePicker
@@ -196,6 +1310,7 @@
                     placeholder="Choose a date"
                     format="iso"
                     separator="/"
+                    theme={currentTheme}
                   />
                   {isoDate && (
                     <div className="format-display">
@@ -203,7 +1318,13 @@
                     </div>
                   )}
                   {isoDate && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -220,9 +1341,19 @@
               <div className="demo-title">📅 Type Two: DateRangePicker</div>
               <div className="feature-grid">
                 {/* Basic Range */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">1. Basic Date Range</div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     Two inputs for start and end date
                   </p>
                   <DateRangePicker
@@ -231,6 +1362,7 @@
                     endPlaceholder="End date"
                     format="simple"
                     separator="/"
+                    theme={currentTheme}
                   />
                   {range1.start && (
                     <div className="format-display mt-3">
@@ -242,7 +1374,13 @@
                     </div>
                   )}
                   {range1.start && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -261,9 +1399,19 @@
                 </div>
 
                 {/* ISO Range */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">2. ISO Date Range</div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     Date range with ISO format storage
                   </p>
                   <DateRangePicker
@@ -272,6 +1420,7 @@
                     endPlaceholder="End date"
                     format="iso"
                     separator="/"
+                    theme={currentTheme}
                   />
                   {range2.start && (
                     <div className="format-display mt-3">
@@ -283,7 +1432,13 @@
                     </div>
                   )}
                   {range2.start && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -302,11 +1457,21 @@
                 </div>
 
                 {/* Restricted Range */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">
                     3. Restricted Date Range
                   </div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     Min: 2024-01-01 | Max: 2025-12-31
                   </p>
                   <DateRangePicker
@@ -317,6 +1482,7 @@
                     separator="/"
                     minDate="2024-01-01"
                     maxDate="2025-12-31"
+                    theme={currentTheme}
                   />
                   {range3.start && (
                     <div className="format-display mt-3">
@@ -328,7 +1494,13 @@
                     </div>
                   )}
                   {range3.start && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -347,11 +1519,21 @@
                 </div>
 
                 {/* Restricted ISO Range */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">
                     4. Restricted ISO Date Range
                   </div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     Min: 2024-01-01 | Max: 2025-12-31 | ISO format
                   </p>
                   <DateRangePicker
@@ -362,6 +1544,7 @@
                     separator="/"
                     minDate="2024-01-01"
                     maxDate="2025-12-31"
+                    theme={currentTheme}
                   />
                   {range4.start && (
                     <div className="format-display mt-3">
@@ -373,7 +1556,13 @@
                     </div>
                   )}
                   {range4.start && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -400,11 +1589,21 @@
               </div>
               <div className="feature-grid">
                 {/* Full DateTime Range */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">
                     1. Full Date-Time Range
                   </div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     Date range + time inputs with seconds (HH:MM:SS)
                   </p>
                   <DateTimeRangePicker
@@ -415,6 +1614,7 @@
                     endTimePlaceholder="End time"
                     format="simple"
                     separator="/"
+                    theme={currentTheme}
                   />
                   {dateTimeRange1.startDate && (
                     <div className="format-display mt-3">
@@ -429,7 +1629,13 @@
                     </div>
                   )}
                   {dateTimeRange1.startDate && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -450,11 +1656,21 @@
                 </div>
 
                 {/* ISO DateTime Range */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">
                     2. ISO Date-Time Range
                   </div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     Date range with ISO format + time inputs with seconds
                   </p>
                   <DateTimeRangePicker
@@ -465,6 +1681,7 @@
                     endTimePlaceholder="End time"
                     format="iso"
                     separator="/"
+                    theme={currentTheme}
                   />
                   {dateTimeRange2.startDate && (
                     <div className="format-display mt-3">
@@ -479,7 +1696,13 @@
                     </div>
                   )}
                   {dateTimeRange2.startDate && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -500,9 +1723,19 @@
                 </div>
 
                 {/* Single Date-Time */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">3. Single Date-Time</div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     One date input + one time input with seconds
                   </p>
                   <DateTimePicker
@@ -511,6 +1744,7 @@
                     timePlaceholder="Select time"
                     format="simple"
                     separator="/"
+                    theme={currentTheme}
                   />
                   {timeOnlyRange.date && (
                     <div className="format-display mt-3">
@@ -522,7 +1756,13 @@
                     </div>
                   )}
                   {timeOnlyRange.date && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -541,11 +1781,21 @@
                 </div>
 
                 {/* Single Date-Time ISO */}
-                <div className="p-4 border rounded-lg bg-white">
+                <div
+                  className={`p-4 border rounded-lg transition-colors duration-300 ${
+                    isDark
+                      ? "bg-gray-800 border-gray-700"
+                      : "bg-white border-gray-200"
+                  }`}
+                >
                   <div className="demo-title text-sm">
                     4. Single Date-Time ISO
                   </div>
-                  <p className="text-xs text-gray-600 mb-3">
+                  <p
+                    className={`text-xs mb-3 ${
+                      isDark ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     One date input + one time input with ISO format
                   </p>
                   <DateTimePicker
@@ -554,6 +1804,7 @@
                     timePlaceholder="Select time"
                     format="iso"
                     separator="/"
+                    theme={currentTheme}
                   />
                   {timeOnlyRangeISO.date && (
                     <div className="format-display mt-3">
@@ -565,7 +1816,13 @@
                     </div>
                   )}
                   {timeOnlyRangeISO.date && (
-                    <div className="format-display mt-2 bg-green-50 border-green-200">
+                    <div
+                      className={`format-display mt-2 border ${
+                        isDark
+                          ? "bg-green-900/30 border-green-700"
+                          : "bg-green-50 border-green-200"
+                      }`}
+                    >
                       <strong>📤 Backend Data:</strong>
                       <br />
                       <code className="text-xs">
@@ -585,19 +1842,124 @@
               </div>
             </div>
 
-            {/* Features Summary */}
-            <div className="demo-section bg-blue-50 border-blue-200">
-              <div className="demo-title text-blue-800">
-                ✨ Component Features
+            {/* Enhanced Components Section */}
+            <div className="demo-section enhanced-section">
+              <div className="demo-title">
+                ✨ Enhanced Components with Beautiful Time Pickers
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-blue-700">
+              <p className="text-purple-100 mb-4">
+                Experience the new scrollable time pickers with modern UI design
+                and dark mode support!
+              </p>
+              <div className="feature-grid">
+                {/* Enhanced Single Date-Time */}
+                <div className="p-4 border rounded-lg bg-white/10 backdrop-blur-sm border-white/20">
+                  <div className="demo-title text-sm text-white">
+                    Enhanced Single Date-Time
+                  </div>
+                  <p className="text-xs text-purple-200 mb-3">
+                    Beautiful scrollable time picker with 12/24 hour support
+                  </p>
+                  <EnhancedDateTimePicker
+                    onDateTimeSelect={handleEnhancedDateTime}
+                    datePlaceholder="Select date"
+                    timePlaceholder="Select time"
+                    format="simple"
+                    separator="/"
+                    timeFormat="12"
+                    timeStep="1"
+                    theme={currentTheme}
+                    size="md"
+                    variant="outline"
+                  />
+                  {enhancedDateTime.date && (
+                    <div className="format-display mt-3 bg-white/20 border-white/30">
+                      <strong className="text-white">
+                        Enhanced Selection:
+                      </strong>
+                      <br />
+                      <span className="text-purple-200">
+                        Date: {enhancedDateTime.date}
+                      </span>
+                      <br />
+                      <span className="text-purple-200">
+                        Time: {enhancedDateTime.time || "Not selected"}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Enhanced Date-Time Range */}
+                <div className="p-4 border rounded-lg bg-white/10 backdrop-blur-sm border-white/20">
+                  <div className="demo-title text-sm text-white">
+                    Enhanced Date-Time Range
+                  </div>
+                  <p className="text-xs text-purple-200 mb-3">
+                    Complete range picker with enhanced scrollable time
+                    selectors
+                  </p>
+                  <EnhancedDateTimeRangePicker
+                    onDateTimeRangeSelect={handleEnhancedDateTimeRange}
+                    startDatePlaceholder="Start date"
+                    endDatePlaceholder="End date"
+                    startTimePlaceholder="Start time"
+                    endTimePlaceholder="End time"
+                    format="simple"
+                    separator="/"
+                    timeFormat="24"
+                    timeStep="60"
+                    theme={currentTheme}
+                    size="md"
+                    variant="filled"
+                  />
+                  {enhancedDateTimeRange.startDate && (
+                    <div className="format-display mt-3 bg-white/20 border-white/30">
+                      <strong className="text-white">Enhanced Range:</strong>
+                      <br />
+                      <span className="text-purple-200">
+                        Start: {enhancedDateTimeRange.startDate}{" "}
+                        {enhancedDateTimeRange.startTime &&
+                          `| ${enhancedDateTimeRange.startTime}`}
+                      </span>
+                      <br />
+                      <span className="text-purple-200">
+                        End: {enhancedDateTimeRange.endDate}{" "}
+                        {enhancedDateTimeRange.endTime &&
+                          `| ${enhancedDateTimeRange.endTime}`}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Features Summary */}
+            <div
+              className={`demo-section transition-colors duration-300 ${
+                isDark
+                  ? "bg-blue-900/30 border-blue-700"
+                  : "bg-blue-50 border-blue-200"
+              }`}
+            >
+              <div
+                className={`demo-title ${
+                  isDark ? "text-blue-300" : "text-blue-800"
+                }`}
+              >
+                ✨ Component Features Summary
+              </div>
+              <div
+                className={`grid grid-cols-1 md:grid-cols-4 gap-4 text-sm ${
+                  isDark ? "text-blue-300" : "text-blue-700"
+                }`}
+              >
                 <div>
                   <strong>📅 Type One (DatePicker):</strong>
                   <ul className="list-disc list-inside ml-4 mt-1">
                     <li>Single date selection</li>
                     <li>Custom calendar dropdown</li>
                     <li>Multiple format options</li>
-                    <li>Theme support</li>
+                    <li>Dark/Light theme support</li>
                   </ul>
                 </div>
                 <div>
@@ -618,13 +1980,107 @@
                     <li>Full date-time range</li>
                   </ul>
                 </div>
+                <div>
+                  <strong>✨ Enhanced Components:</strong>
+                  <ul className="list-disc list-inside ml-4 mt-1">
+                    <li>Beautiful scrollable time UI</li>
+                    <li>12/24 hour format support</li>
+                    <li>Modern animations</li>
+                    <li>Dark mode compatible</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Dark Mode Info */}
+            <div
+              className={`demo-section transition-colors duration-300 ${
+                isDark
+                  ? "bg-purple-900/30 border-purple-700"
+                  : "bg-purple-50 border-purple-200"
+              }`}
+            >
+              <div
+                className={`demo-title ${
+                  isDark ? "text-purple-300" : "text-purple-800"
+                }`}
+              >
+                🌙 Dark Mode Features
+              </div>
+              <div
+                className={`text-sm ${
+                  isDark ? "text-purple-300" : "text-purple-700"
+                }`}
+              >
+                <p className="mb-4">
+                  Click the theme toggle button in the top-right corner to
+                  switch between light and dark modes. All components
+                  automatically adapt their styling based on the current theme.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <strong>🎨 Theme Features:</strong>
+                    <ul className="list-disc list-inside ml-4 mt-1">
+                      <li>Smooth transitions between themes</li>
+                      <li>Consistent color schemes</li>
+                      <li>Enhanced readability</li>
+                      <li>Modern glassmorphism effects</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <strong>⚡ Performance:</strong>
+                    <ul className="list-disc list-inside ml-4 mt-1">
+                      <li>CSS-based theme switching</li>
+                      <li>No re-renders on theme change</li>
+                      <li>Optimized animations</li>
+                      <li>Accessibility compliant</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         );
       }
 
-      ReactDOM.render(<Demo />, document.getElementById("demo-root"));
+      function App() {
+        return (
+          <ThemeProvider>
+            <Demo />
+          </ThemeProvider>
+        );
+      }
+
+      ReactDOM.render(<App />, document.getElementById("demo-root"));
+
+      // Theme toggle functionality
+      document
+        .getElementById("themeToggle")
+        .addEventListener("click", function () {
+          const body = document.body;
+          const sunIcon = document.querySelector(".sun-icon");
+          const moonIcon = document.querySelector(".moon-icon");
+
+          if (body.classList.contains("light-mode")) {
+            body.className = "dark-mode";
+            sunIcon.style.display = "none";
+            moonIcon.style.display = "block";
+
+            // Trigger React re-render by dispatching a custom event
+            window.dispatchEvent(
+              new CustomEvent("themeChange", { detail: { theme: "dark" } })
+            );
+          } else {
+            body.className = "light-mode";
+            sunIcon.style.display = "block";
+            moonIcon.style.display = "none";
+
+            // Trigger React re-render by dispatching a custom event
+            window.dispatchEvent(
+              new CustomEvent("themeChange", { detail: { theme: "light" } })
+            );
+          }
+        });
     </script>
   </body>
 </html>

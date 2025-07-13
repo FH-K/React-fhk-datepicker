@@ -1,12 +1,20 @@
 {
   "name": "react-fhk-datepicker",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.2.0",
+  "description": "A comprehensive React date and time picker library with multiple components, enhanced UI/UX, and timezone-safe date selection",
   "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "demo": "webpack --mode development && open demo/index.html"
+    "demo": "webpack --mode development && open demo/index.html",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -15,8 +23,14 @@
   "keywords": [
     "react",
     "datepicker",
+    "timepicker",
+    "datetime",
+    "calendar",
     "tailwind",
-    "component"
+    "component",
+    "typescript",
+    "accessible",
+    "timezone-safe"
   ],
   "author": "FH-K",
   "license": "MIT",
@@ -38,5 +52,8 @@
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
