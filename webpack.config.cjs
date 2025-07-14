@@ -5,9 +5,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index.js",
-    library: "ReactFhkDatepicker", // Make sure this matches
+    library: "ReactFhkDatepicker",
     libraryTarget: "umd",
     globalObject: "this",
+    clean: true,
   },
   module: {
     rules: [
@@ -28,5 +29,11 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx"],
+  },
+  // Fix for Next.js compatibility - disable eval devtool
+  devtool: false,
+  // Ensure proper module resolution
+  experiments: {
+    outputModule: false,
   },
 };
