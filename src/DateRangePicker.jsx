@@ -180,6 +180,7 @@ const DateRangePicker = ({
           autoFocus={autoFocus}
           error={error}
           helperText={helperText}
+          date={startDateValue}
         />
       </div>
 
@@ -204,6 +205,7 @@ const DateRangePicker = ({
           autoFocus={false}
           error={error}
           helperText={helperText}
+          date={endDateValue}
         />
       </div>
 

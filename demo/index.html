@@ -743,7 +743,7 @@
         const [dateValue, setDateValue] = React.useState(date || "");
         const [timeValue, setTimeValue] = React.useState(time || "");
 
-        const { DatePicker } = ReactFhkDatepicker;
+        const { DatePicker } = ReactFHKDatePicker;
 
         const handleDateSelect = (selectedDate) => {
           setDateValue(selectedDate);
@@ -909,7 +909,7 @@
         );
         const [endTimeValue, setEndTimeValue] = React.useState(endTime || "");
 
-        const { DateRangePicker } = ReactFhkDatepicker;
+        const { DateRangePicker } = ReactFHKDatePicker;
 
         const handleDateRangeSelect = (range) => {
           setStartDateValue(range.start || "");
@@ -1147,7 +1147,7 @@
         DateRangePicker,
         DateTimeRangePicker,
         DateTimePicker,
-      } = ReactFhkDatepicker;
+      } = ReactFHKDatePicker;
 
       function Demo() {
         const { isDark } = useTheme();

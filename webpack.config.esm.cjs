@@ -4,11 +4,15 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index.js",
-    library: "ReactFHKDatePicker",
-    libraryTarget: "umd",
+    filename: "index.esm.js",
+    library: {
+      type: "module",
+    },
     globalObject: "this",
-    clean: true,
+    clean: false, // Don't clean since we have multiple outputs
+  },
+  experiments: {
+    outputModule: true,
   },
   module: {
     rules: [
@@ -24,16 +28,11 @@ module.exports = {
     ],
   },
   externals: {
-    react: "React",
-    "react-dom": "ReactDOM",
+    react: "react",
+    "react-dom": "react-dom",
   },
   resolve: {
     extensions: [".js", ".jsx"],
   },
-  // Fix for Next.js compatibility - disable eval devtool
   devtool: false,
-  // Ensure proper module resolution
-  experiments: {
-    outputModule: false,
-  },
 };
