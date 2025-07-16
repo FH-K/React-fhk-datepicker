@@ -225,7 +225,6 @@ const DatePicker = ({
 
   const handleDateSelect = (date) => {
     setIsAnimating(true);
-
     // Create a date string in YYYY-MM-DD format without timezone conversion
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");

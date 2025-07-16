@@ -331,9 +331,13 @@ const TimePicker = ({
   const sanitizedClassName = sanitizeClassName(className);
 
   return (
-    <div className={`relative ${sanitizedClassName}`}>
+    <div
+      className={`rfhk-timepicker-container rfhk-theme-${theme} rfhk-size-${size} rfhk-variant-${variant} ${
+        error ? "rfhk-error" : ""
+      } ${disabled ? "rfhk-disabled" : ""} ${sanitizedClassName}`}
+    >
       {/* Input Field */}
-      <div className="relative">
+      <div className="rfhk-timepicker-input-wrapper">
         <input
           ref={inputRef}
           type="text"
@@ -342,17 +346,17 @@ const TimePicker = ({
           disabled={disabled}
           readOnly
           onClick={() => !disabled && setIsOpen(!isOpen)}
-          className={getInputClasses()}
+          className="rfhk-timepicker-input"
         />
 
         {/* Icons Container */}
-        <div className="absolute inset-y-0 right-0 flex items-center pr-3 space-x-1">
+        <div className="rfhk-timepicker-input-icons">
           {/* Clear Button */}
           {inputValue && !disabled && (
             <button
               type="button"
               onClick={handleClear}
-              className={`${currentTheme.clear} transition-colors duration-150 hover:scale-110`}
+              className="rfhk-timepicker-clear-button"
             >
               <svg
                 className={currentSize.icon}
@@ -371,7 +375,7 @@ const TimePicker = ({
           )}
 
           {/* Clock Icon */}
-          <div className={`text-gray-400 ${disabled ? "opacity-50" : ""}`}>
+          <div className="rfhk-timepicker-clock-icon">
             <svg
               className={currentSize.icon}
               fill="none"
@@ -392,7 +396,7 @@ const TimePicker = ({
       {/* Helper Text */}
       {helperText && (
         <p
-          className={`mt-1 text-xs ${error ? "text-red-600" : "text-gray-500"}`}
+          className={`rfhk-timepicker-helper-text ${error ? "rfhk-error" : ""}`}
         >
           {helperText}
         </p>
@@ -400,21 +404,13 @@ const TimePicker = ({
 
       {/* Time Picker Dropdown */}
       {isOpen && (
-        <div
-          ref={timePickerRef}
-          className={`
-            absolute top-full left-0 z-50 mt-2 rounded-2xl border transition-all duration-300
-            ${currentSize.dropdown} ${currentTheme.dropdown}
-          `}
-        >
+        <div ref={timePickerRef} className="rfhk-timepicker-dropdown">
           {/* Header */}
-          <div
-            className={`flex items-center justify-between p-4 rounded-t-2xl ${currentTheme.header}`}
-          >
-            <h3 className="text-sm font-semibold">Select Time</h3>
+          <div className="rfhk-timepicker-header">
+            <h3 className="rfhk-timepicker-title">Select Time</h3>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 hover:bg-gray-200 rounded transition-colors"
+              className="rfhk-timepicker-close"
             >
               <svg
                 className={currentSize.icon}
@@ -433,53 +429,73 @@ const TimePicker = ({
           </div>
 
           {/* Time Selection Grid */}
-          <div className="grid grid-cols-3 gap-1 p-4">
+          <div className="rfhk-timepicker-grid">
             {/* Hours */}
-            <div>
-              <div className="text-xs font-medium text-gray-500 mb-2 text-center">
-                Hour
+            <div className="rfhk-timepicker-column">
+              <div className="rfhk-timepicker-label">Hour</div>
+              <div className="rfhk-timepicker-scroll-area">
+                {generateHours().map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => handleTimeSelect("hour", item)}
+                    className={`rfhk-timepicker-item ${
+                      selectedHour === item ? "rfhk-selected" : ""
+                    }`}
+                  >
+                    {item}
+                  </button>
+                ))}
               </div>
-              <ScrollableList
-                items={generateHours()}
-                selected={selectedHour}
-                onSelect={handleTimeSelect}
-                type="hour"
-              />
             </div>
 
             {/* Minutes */}
-            <div>
-              <div className="text-xs font-medium text-gray-500 mb-2 text-center">
-                Minute
+            <div className="rfhk-timepicker-column">
+              <div className="rfhk-timepicker-label">Minute</div>
+              <div className="rfhk-timepicker-scroll-area">
+                {generateMinutes().map((item) => (
+                  <button
+                    key={item}
+                    onClick={() => handleTimeSelect("minute", item)}
+                    className={`rfhk-timepicker-item ${
+                      selectedMinute === item ? "rfhk-selected" : ""
+                    }`}
+                  >
+                    {item}
+                  </button>
+                ))}
               </div>
-              <ScrollableList
-                items={generateMinutes()}
-                selected={selectedMinute}
-                onSelect={handleTimeSelect}
-                type="minute"
-              />
             </div>
 
             {/* Seconds or Period */}
-            <div>
-              <div className="text-xs font-medium text-gray-500 mb-2 text-center">
+            <div className="rfhk-timepicker-column">
+              <div className="rfhk-timepicker-label">
                 {step === "1" ? "Second" : "Period"}
               </div>
-              {step === "1" ? (
-                <ScrollableList
-                  items={generateSeconds()}
-                  selected={selectedSecond}
-                  onSelect={handleTimeSelect}
-                  type="second"
-                />
-              ) : (
-                <ScrollableList
-                  items={["AM", "PM"]}
-                  selected={selectedPeriod}
-                  onSelect={handleTimeSelect}
-                  type="period"
-                />
-              )}
+              <div className="rfhk-timepicker-scroll-area">
+                {step === "1"
+                  ? generateSeconds().map((item) => (
+                      <button
+                        key={item}
+                        onClick={() => handleTimeSelect("second", item)}
+                        className={`rfhk-timepicker-item ${
+                          selectedSecond === item ? "rfhk-selected" : ""
+                        }`}
+                      >
+                        {item}
+                      </button>
+                    ))
+                  : ["AM", "PM"].map((item) => (
+                      <button
+                        key={item}
+                        onClick={() => handleTimeSelect("period", item)}
+                        className={`rfhk-timepicker-item ${
+                          selectedPeriod === item ? "rfhk-selected" : ""
+                        }`}
+                      >
+                        {item}
+                      </button>
+                    ))}
+              </div>
             </div>
           </div>
         </div>

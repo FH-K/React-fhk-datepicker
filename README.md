@@ -5,8 +5,11 @@ A comprehensive React date and time picker library with multiple components for 
 ## 🚀 Features
 
 - **Multiple Component Types**: Single date, date range, date-time range, and single date-time pickers
+- **Responsive Design**: All components adapt seamlessly from mobile to desktop
+- **Global Sorting Order**: Consistent layout (start date → start time → end date → end time)
 - **Flexible Format Support**: Simple (YYYY/MM/DD), ISO (ISO 8601), and range formats
 - **Smart Validation**: Automatic date and time validation with cross-input restrictions
+- **Clean, Minimal UI**: Professional design without cluttered display boxes
 - **Enhanced UI/UX**: Modern design with animations, gradients, and improved interactions
 - **Multiple Sizes**: Small, medium, and large size variants
 - **Multiple Variants**: Outline, filled, and ghost input styles
@@ -17,6 +20,8 @@ A comprehensive React date and time picker library with multiple components for 
 - **TypeScript Ready**: Full TypeScript support with comprehensive type definitions
 - **No Dependencies**: Zero external dependencies beyond React
 - **Timezone Safe**: No timezone offset issues when selecting dates
+- **Isolated CSS**: Prefixed class names prevent conflicts with your app's styles
+- **Enhanced TimePicker**: 3-column grid layout (Hour, Minute, Second/Period)
 
 ## 📦 Installation
 
@@ -34,6 +39,7 @@ import {
   DateRangePicker,
   DateTimeRangePicker,
   DateTimePicker,
+  TimePicker,
 } from "react-fhk-datepicker";
 
 // ✅ REQUIRED: Import the isolated CSS file (won't affect your app's styles)
@@ -131,7 +137,7 @@ import { DatePicker } from "react-fhk-datepicker";
 
 ### 2. DateRangePicker (Date Range)
 
-Two connected date inputs with smart validation, cross-input restrictions, and enhanced UI.
+Two connected date inputs with smart validation, cross-input restrictions, and responsive design.
 
 ```jsx
 import { DateRangePicker } from "react-fhk-datepicker";
@@ -150,6 +156,13 @@ import { DateRangePicker } from "react-fhk-datepicker";
   theme="light"
 />;
 ```
+
+**Global Sorting Order**: Start Date → End Date
+
+**Responsive Layout**:
+
+- Mobile: 1 column (stacked)
+- Desktop: 2 columns (side by side)
 
 **Props:**
 
@@ -175,7 +188,7 @@ import { DateRangePicker } from "react-fhk-datepicker";
 
 ### 3. DateTimeRangePicker (Date-Time Range)
 
-Date range picker with time inputs supporting seconds (HH:MM:SS) and enhanced UI.
+Date range picker with time inputs supporting seconds (HH:MM:SS) and enhanced responsive design.
 
 ```jsx
 import { DateTimeRangePicker } from "react-fhk-datepicker";
@@ -193,6 +206,14 @@ import { DateTimeRangePicker } from "react-fhk-datepicker";
   showTodayButton={true}
 />;
 ```
+
+**Global Sorting Order**: Start Date → Start Time → End Date → End Time
+
+**Responsive Layout**:
+
+- Mobile: 1 column
+- Small screens: 2 columns
+- Large screens: 4 columns
 
 **Props:**
 
@@ -218,11 +239,13 @@ import { DateTimeRangePicker } from "react-fhk-datepicker";
 - `endDate`: Initial end date
 - `startTime`: Initial start time
 - `endTime`: Initial end time
+- `timeFormat`: Time format ("12", "24")
+- `timeStep`: Time step ("1" for seconds, "60" for minutes only)
 - `calendarClassName`: Custom CSS class name for the calendar popup
 
 ### 4. DateTimePicker (Single Date-Time)
 
-Single date picker with time input supporting seconds and enhanced UI.
+Single date picker with time input supporting seconds and responsive design.
 
 ```jsx
 import { DateTimePicker } from "react-fhk-datepicker";
@@ -238,6 +261,13 @@ import { DateTimePicker } from "react-fhk-datepicker";
   showTodayButton={true}
 />;
 ```
+
+**Global Sorting Order**: Start Date → Start Time
+
+**Responsive Layout**:
+
+- Mobile: 1 column (stacked)
+- Desktop: 2 columns (side by side)
 
 **Props:**
 
@@ -259,9 +289,83 @@ import { DateTimePicker } from "react-fhk-datepicker";
 - `disabled`: Disable the picker
 - `date`: Initial date
 - `time`: Initial time
+- `timeFormat`: Time format ("12", "24")
+- `timeStep`: Time step ("1" for seconds, "60" for minutes only)
 - `calendarClassName`: Custom CSS class name for the calendar popup
 
+### 5. TimePicker (Standalone Time)
+
+Standalone time picker with 3-column grid layout (Hour, Minute, Second/Period).
+
+```jsx
+import { TimePicker } from "react-fhk-datepicker";
+
+<TimePicker
+  value="15:30:00"
+  onChange={(e) => console.log(e.target.value)}
+  placeholder="Select time"
+  format="24" // "12" or "24"
+  step="1" // "1" for seconds, "60" for minutes only
+  size="md"
+  variant="outline"
+  theme="light"
+  disabled={false}
+  error={false}
+  helperText=""
+/>;
+```
+
+**3-Column Grid Layout**:
+
+- Column 1: Hours (00-23 or 01-12)
+- Column 2: Minutes (00-59)
+- Column 3: Seconds (00-59) or Period (AM/PM)
+
+**Props:**
+
+- `value`: Current time value (HH:MM:SS format)
+- `onChange`: Callback function when time changes
+- `placeholder`: Input placeholder text
+- `format`: Time format ("12", "24")
+- `step`: Time step ("1" for seconds, "60" for minutes only)
+- `size`: Component size ("sm", "md", "lg")
+- `variant`: Input style variant ("outline", "filled", "ghost")
+- `theme`: UI theme ("light", "dark")
+- `disabled`: Disable the picker
+- `error`: Show error state styling
+- `helperText`: Helper text below input
+
 ## 🎨 UI Features
+
+### Responsive Design
+
+All components are fully responsive and adapt to different screen sizes:
+
+```jsx
+// DateRangePicker - Responsive grid
+// Mobile: 1 column, Desktop: 2 columns
+<DateRangePicker size="md" />
+
+// DateTimeRangePicker - Responsive grid
+// Mobile: 1 column, Small: 2 columns, Large: 4 columns
+<DateTimeRangePicker size="md" />
+
+// DateTimePicker - Responsive grid
+// Mobile: 1 column, Desktop: 2 columns
+<DateTimePicker size="md" />
+```
+
+### Global Sorting Order
+
+All components follow a consistent global sorting order for better UX:
+
+- **DateRangePicker**: Start Date → End Date
+- **DateTimePicker**: Start Date → Start Time
+- **DateTimeRangePicker**: Start Date → Start Time → End Date → End Time
+
+### Clean, Minimal Design
+
+All components feature a clean, professional interface without cluttered display boxes. Selected values are passed through callback functions, keeping the UI minimal and focused.
 
 ### Size Variants
 
@@ -341,6 +445,9 @@ import { DateTimePicker } from "react-fhk-datepicker";
   time: "15:30:00",
   isValid: true
 }
+
+// TimePicker
+"15:30:00" // HH:MM:SS format
 ```
 
 ### ISO Format
@@ -387,20 +494,21 @@ import { DateTimePicker } from "react-fhk-datepicker";
 
 **⚠️ IMPORTANT: You MUST import the CSS file for the calendar to display correctly!**
 
-This library uses Tailwind CSS for styling. The calendar layout requires specific CSS classes that are included in the provided CSS file.
+This library uses Tailwind CSS for styling with isolated class names to prevent conflicts with your existing styles.
 
-### Standardized Input Styles
+### Isolated CSS Design
 
-All input fields use consistent, modern styling with:
+The library uses prefixed class names (`rfhk-`) to ensure no conflicts with your app's existing styles:
 
-- **Base styles**: `w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400`
-- **Focus states**: `focus:outline-none focus:ring-2 focus:ring-blue-500`
-- **Dynamic states**: Error (red border/ring), disabled (opacity + gray background), active (blue border/ring)
-- **Dark mode support**: All styles include dark mode variants
+- **No style conflicts**: All classes are prefixed with `rfhk-`
+- **Lightweight**: Only includes necessary styles
+- **Safe integration**: Won't affect your app's existing CSS
+- **Professional appearance**: Clean, modern design
+- **Responsive grid layouts**: Proper calendar and time picker grids
 
 ### Required CSS Import
 
-**You MUST import the CSS file in your app (no conflicts with your existing styles!):**
+**You MUST import the CSS file in your app:**
 
 ```js
 import { DatePicker, DateRangePicker } from "react-fhk-datepicker";
@@ -439,15 +547,15 @@ import "react-fhk-datepicker/style.css";
 
 - ❌ Calendar displays as vertical list
 - ❌ Dates are not in a grid layout
+- ❌ TimePicker shows as single column
 - ❌ Poor user experience
 
 ### What Happens With CSS Import
 
 - ✅ Calendar displays as proper 7-column grid
 - ✅ Dates are arranged in table-like structure
+- ✅ TimePicker shows in 3-column grid (Hour, Minute, Second/Period)
 - ✅ Professional appearance and usability
-
-**Note:** The CSS file uses isolated class names (prefixed with `rfhk-`) to prevent conflicts with your existing styles, making it lightweight and safe to use in any project.
 
 ## 🔧 Troubleshooting
 
@@ -468,6 +576,20 @@ If your calendar appears as a vertical list instead of a proper 7-column grid:
 4. **If using a custom build setup, ensure the CSS file is included in your build process**
 
 The package includes inline styles as a fallback, but the CSS import is still required for optimal styling.
+
+### TimePicker Not Showing 3-Column Grid
+
+If your TimePicker displays as a single column instead of the proper 3-column grid:
+
+1. **Ensure CSS import is present:**
+
+   ```jsx
+   import "react-fhk-datepicker/style.css";
+   ```
+
+2. **Check that the TimePicker component is using the latest version**
+
+3. **Verify no CSS conflicts are overriding the grid styles**
 
 ### Dark Theme Example
 
@@ -541,6 +663,30 @@ const [selectedDate, setSelectedDate] = useState("");
   size="lg"
   variant="filled"
 />;
+```
+
+### Responsive Layout Examples
+
+```jsx
+// DateRangePicker - Responsive grid
+<DateRangePicker
+  onRangeSelect={handleRangeSelect}
+  startPlaceholder="Start date"
+  endPlaceholder="End date"
+  size="md"
+  variant="outline"
+/>
+
+// DateTimeRangePicker - Responsive grid with 4 columns on large screens
+<DateTimeRangePicker
+  onDateTimeRangeSelect={handleDateTimeRangeSelect}
+  startDatePlaceholder="Start date"
+  endDatePlaceholder="End date"
+  startTimePlaceholder="Start time"
+  endTimePlaceholder="End time"
+  size="md"
+  variant="outline"
+/>
 ```
 
 ## 🧪 Examples
@@ -623,6 +769,34 @@ function DateTimeRangeExample() {
 }
 ```
 
+### TimePicker with 3-Column Grid
+
+```jsx
+import { TimePicker } from "react-fhk-datepicker";
+
+function TimePickerExample() {
+  const [time, setTime] = useState("15:30:00");
+
+  const handleTimeChange = (e) => {
+    setTime(e.target.value);
+    console.log("Selected time:", e.target.value);
+  };
+
+  return (
+    <TimePicker
+      value={time}
+      onChange={handleTimeChange}
+      placeholder="Select time"
+      format="24"
+      step="1"
+      size="md"
+      variant="outline"
+      theme="light"
+    />
+  );
+}
+```
+
 ### Error State Example
 
 ```jsx
@@ -650,17 +824,19 @@ function ErrorExample() {
 
 ## 🚀 Migration Guide
 
-### From v1.0.0 to v1.2.0
+### From v1.0.0 to v1.3.22
 
-- Added enhanced UI features with size and variant props
-- Added clear button and today button controls
-- Added error state and helper text support
-- Added auto-focus functionality
-- Fixed timezone issues with date selection
-- Fixed dark mode input text visibility issues
-- Enhanced input validation and security measures
-- Enhanced animations and visual feedback
-- Improved accessibility and keyboard navigation
+- **Responsive Design**: All components now adapt seamlessly from mobile to desktop
+- **Global Sorting Order**: Consistent layout across all components
+- **Enhanced TimePicker**: Fixed 3-column grid layout (Hour, Minute, Second/Period)
+- **Isolated CSS**: All components use prefixed class names to prevent conflicts
+- **Removed display boxes**: Clean, minimal UI without cluttered result displays
+- **Enhanced validation**: Improved border color feedback (red for invalid, green for valid)
+- **Better TypeScript support**: Comprehensive type definitions included
+- **Improved accessibility**: Enhanced keyboard navigation and screen reader support
+- **Fixed timezone issues**: No more timezone offset problems
+- **Enhanced animations**: Smooth transitions and visual feedback
+- **Professional design**: Modern, clean interface suitable for production use
 
 ## 🤝 Contributing
 
@@ -681,3 +857,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Icons from Heroicons
 - Calendar logic inspired by modern date picker patterns
 - Enhanced UI/UX with modern design principles
+- Responsive design patterns for optimal mobile and desktop experience

@@ -103,4 +103,15 @@ declare module "react-fhk-datepicker" {
   export const TimePicker: React.FC<TimePickerProps>;
   export const DateTimePicker: React.FC<DateTimePickerProps>;
   export const DateTimeRangePicker: React.FC<DateTimeRangePickerProps>;
+
+  // Default export
+  const ReactFHKDatePicker: {
+    DatePicker: React.FC<DatePickerProps>;
+    DateRangePicker: React.FC<DateRangePickerProps>;
+    TimePicker: React.FC<TimePickerProps>;
+    DateTimePicker: React.FC<DateTimePickerProps>;
+    DateTimeRangePicker: React.FC<DateTimeRangePickerProps>;
+  };
+
+  export default ReactFHKDatePicker;
 }

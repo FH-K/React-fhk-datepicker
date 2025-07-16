@@ -159,57 +159,68 @@ const DateRangePicker = ({
   }, [endDate]);
 
   return (
-    <div className={`space-y-4 ${className}`}>
-      {/* Start Date */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Start Date
-        </label>
-        <DatePicker
-          onDateSelect={handleStartDateSelect}
-          placeholder={startPlaceholder}
-          format={format}
-          separator={separator}
-          disabled={disabled}
-          minDate={minDate}
-          maxDate={getStartMaxDate()}
-          theme={theme}
-          size={size}
-          variant={variant}
-          showClearButton={showClearButton}
-          showTodayButton={showTodayButton}
-          autoFocus={autoFocus}
-          error={error}
-          helperText={helperText}
-          date={startDateValue}
-          calendarClassName={calendarClassName}
-        />
-      </div>
+    <div className={`${className}`}>
+      {/* Responsive Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Start Date */}
+        <div>
+          <label
+            className={`block text-sm font-medium mb-2 ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
+            📅 Start Date
+          </label>
+          <DatePicker
+            onDateSelect={handleStartDateSelect}
+            placeholder={startPlaceholder}
+            format={format}
+            separator={separator}
+            disabled={disabled}
+            minDate={minDate}
+            maxDate={getStartMaxDate()}
+            theme={theme}
+            size={size}
+            variant={variant}
+            showClearButton={showClearButton}
+            showTodayButton={showTodayButton}
+            autoFocus={autoFocus}
+            error={error}
+            helperText={helperText}
+            date={startDateValue}
+            calendarClassName={calendarClassName}
+          />
+        </div>
 
-      {/* End Date */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          End Date
-        </label>
-        <DatePicker
-          onDateSelect={handleEndDateSelect}
-          placeholder={endPlaceholder}
-          format={format}
-          separator={separator}
-          disabled={disabled}
-          minDate={getEndMinDate()}
-          maxDate={maxDate}
-          theme={theme}
-          size={size}
-          variant={variant}
-          showClearButton={showClearButton}
-          showTodayButton={showTodayButton}
-          autoFocus={false}
-          error={error}
-          helperText={helperText}
-          date={endDateValue}
-          calendarClassName={calendarClassName}
-        />
+        {/* End Date */}
+        <div>
+          <label
+            className={`block text-sm font-medium mb-2 ${
+              theme === "dark" ? "text-gray-300" : "text-gray-700"
+            }`}
+          >
+            📅 End Date
+          </label>
+          <DatePicker
+            onDateSelect={handleEndDateSelect}
+            placeholder={endPlaceholder}
+            format={format}
+            separator={separator}
+            disabled={disabled}
+            minDate={getEndMinDate()}
+            maxDate={maxDate}
+            theme={theme}
+            size={size}
+            variant={variant}
+            showClearButton={showClearButton}
+            showTodayButton={showTodayButton}
+            autoFocus={false}
+            error={error}
+            helperText={helperText}
+            date={endDateValue}
+            calendarClassName={calendarClassName}
+          />
+        </div>
       </div>
     </div>
   );

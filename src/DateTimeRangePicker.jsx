@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import DatePicker from "./DatePicker.jsx";
 import DateRangePicker from "./DateRangePicker.jsx";
 import TimePicker from "./TimePicker.jsx"; // Import the enhanced TimePicker
 
@@ -153,6 +154,64 @@ const DateTimeRangePicker = ({
     onDateTimeRangeSelect && onDateTimeRangeSelect(dateTimeRange);
   };
 
+  // Helper function to compare dates properly
+  const isDateBefore = (date1, date2) => {
+    if (!date1 || !date2) return false;
+
+    // Convert to Date objects for proper comparison
+    let d1, d2;
+
+    if (typeof date1 === "string") {
+      // Handle different date formats
+      if (date1.includes("T")) {
+        // ISO format
+        d1 = new Date(date1);
+      } else {
+        // Simple format (YYYY/MM/DD or YYYY-MM-DD)
+        const parts = date1.split(/[\/\-]/);
+        if (parts.length === 3) {
+          d1 = new Date(
+            parseInt(parts[0]),
+            parseInt(parts[1]) - 1,
+            parseInt(parts[2])
+          );
+        } else {
+          d1 = new Date(date1);
+        }
+      }
+    } else {
+      d1 = new Date(date1);
+    }
+
+    if (typeof date2 === "string") {
+      // Handle different date formats
+      if (date2.includes("T")) {
+        // ISO format
+        d2 = new Date(date2);
+      } else {
+        // Simple format (YYYY/MM/DD or YYYY-MM-DD)
+        const parts = date2.split(/[\/\-]/);
+        if (parts.length === 3) {
+          d2 = new Date(
+            parseInt(parts[0]),
+            parseInt(parts[1]) - 1,
+            parseInt(parts[2])
+          );
+        } else {
+          d2 = new Date(date2);
+        }
+      }
+    } else {
+      d2 = new Date(date2);
+    }
+
+    // Compare dates by setting time to 00:00:00 for accurate comparison
+    d1.setHours(0, 0, 0, 0);
+    d2.setHours(0, 0, 0, 0);
+
+    return d1 < d2;
+  };
+
   // Helper function to compare times
   const isTimeBefore = (time1, time2) => {
     if (!time1 || !time2) return false;
@@ -233,8 +292,8 @@ const DateTimeRangePicker = ({
   }, [endTime]);
 
   return (
-    <div className={`space-y-6 ${className}`}>
-      {/* Date Range Picker */}
+    <div className={`space-y-4 ${className}`}>
+      {/* Combined Date-Time Range Picker */}
       <div
         className={`p-4 rounded-xl border-2 ${
           theme === "dark"
@@ -243,53 +302,54 @@ const DateTimeRangePicker = ({
         }`}
       >
         <div
-          className={`text-sm font-medium mb-3 ${
+          className={`text-sm font-medium mb-4 ${
             theme === "dark" ? "text-gray-300" : "text-gray-700"
           }`}
         >
-          📅 Select Date Range
+          📅 Date-Time Range Selection
         </div>
 
-        <DateRangePicker
-          onRangeSelect={handleDateRangeSelect}
-          startPlaceholder={startDatePlaceholder}
-          endPlaceholder={endDatePlaceholder}
-          format={format}
-          separator={separator}
-          disabled={disabled}
-          minDate={minDate}
-          maxDate={maxDate}
-          theme={theme}
-          startDate={startDateValue}
-          endDate={endDateValue}
-          size={size}
-          variant={variant}
-          showClearButton={showClearButton}
-          showTodayButton={showTodayButton}
-          autoFocus={autoFocus}
-          error={error}
-          helperText={helperText}
-          calendarClassName={calendarClassName}
-        />
-      </div>
+        {/* Responsive Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Start Date */}
+          <div>
+            <label
+              className={`block text-sm font-medium mb-2 ${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              📅 Start Date
+            </label>
+            <DatePicker
+              onDateSelect={(date) => {
+                const range = {
+                  start: date,
+                  end: endDateValue,
+                  isValid:
+                    !!date &&
+                    !!endDateValue &&
+                    !isDateBefore(endDateValue, date),
+                };
+                handleDateRangeSelect(range);
+              }}
+              placeholder={startDatePlaceholder}
+              format={format}
+              separator={separator}
+              disabled={disabled}
+              minDate={minDate}
+              maxDate={endDateValue || maxDate}
+              theme={theme}
+              size={size}
+              variant={variant}
+              showClearButton={showClearButton}
+              showTodayButton={showTodayButton}
+              autoFocus={autoFocus}
+              error={error}
+              helperText=""
+              calendarClassName={calendarClassName}
+            />
+          </div>
 
-      {/* Time Range Picker */}
-      <div
-        className={`p-4 rounded-xl border-2 ${
-          theme === "dark"
-            ? "bg-blue-900/30 border-blue-700"
-            : "bg-blue-50 border-blue-200"
-        }`}
-      >
-        <div
-          className={`text-sm font-medium mb-3 ${
-            theme === "dark" ? "text-blue-300" : "text-blue-700"
-          }`}
-        >
-          🕐 Select Time Range
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Start Time */}
           <div>
             <label
@@ -311,6 +371,45 @@ const DateTimeRangePicker = ({
               step={timeStep}
               error={error}
               helperText=""
+            />
+          </div>
+
+          {/* End Date */}
+          <div>
+            <label
+              className={`block text-sm font-medium mb-2 ${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              📅 End Date
+            </label>
+            <DatePicker
+              onDateSelect={(date) => {
+                const range = {
+                  start: startDateValue,
+                  end: date,
+                  isValid:
+                    !!startDateValue &&
+                    !!date &&
+                    !isDateBefore(date, startDateValue),
+                };
+                handleDateRangeSelect(range);
+              }}
+              placeholder={endDatePlaceholder}
+              format={format}
+              separator={separator}
+              disabled={disabled}
+              minDate={startDateValue || minDate}
+              maxDate={maxDate}
+              theme={theme}
+              size={size}
+              variant={variant}
+              showClearButton={showClearButton}
+              showTodayButton={showTodayButton}
+              autoFocus={false}
+              error={error}
+              helperText=""
+              calendarClassName={calendarClassName}
             />
           </div>
 
@@ -339,123 +438,6 @@ const DateTimeRangePicker = ({
           </div>
         </div>
       </div>
-
-      {/* Date-Time Range Display */}
-      {(startDateValue || endDateValue || startTimeValue || endTimeValue) && (
-        <div
-          className={`p-4 rounded-xl border-2 transition-all duration-200 ${
-            theme === "dark"
-              ? "bg-indigo-900/30 border-indigo-700"
-              : "bg-indigo-50 border-indigo-200"
-          }`}
-        >
-          <div
-            className={`text-sm ${
-              theme === "dark" ? "text-indigo-300" : "text-indigo-800"
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-lg">🎯</span>
-              <strong>Selected Date-Time Range</strong>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {/* Start DateTime */}
-              <div
-                className={`p-3 rounded-lg ${
-                  theme === "dark" ? "bg-indigo-800/50" : "bg-indigo-100"
-                }`}
-              >
-                <div className="font-medium text-xs uppercase tracking-wide mb-2 opacity-75">
-                  🟢 Start
-                </div>
-                <div className="space-y-1">
-                  <div className="font-mono text-xs">
-                    <span className="opacity-75">Date:</span>{" "}
-                    {startDateValue || "Not selected"}
-                  </div>
-                  <div className="font-mono text-xs">
-                    <span className="opacity-75">Time:</span>{" "}
-                    {startTimeValue || "Not selected"}
-                  </div>
-                </div>
-              </div>
-
-              {/* End DateTime */}
-              <div
-                className={`p-3 rounded-lg ${
-                  theme === "dark" ? "bg-indigo-800/50" : "bg-indigo-100"
-                }`}
-              >
-                <div className="font-medium text-xs uppercase tracking-wide mb-2 opacity-75">
-                  🔴 End
-                </div>
-                <div className="space-y-1">
-                  <div className="font-mono text-xs">
-                    <span className="opacity-75">Date:</span>{" "}
-                    {endDateValue || "Not selected"}
-                  </div>
-                  <div className="font-mono text-xs">
-                    <span className="opacity-75">Time:</span>{" "}
-                    {endTimeValue || "Not selected"}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Validation Status */}
-            {startDateValue && endDateValue && (
-              <div className="mt-3 flex items-center gap-2">
-                {validateDateTimeRange(
-                  startDateValue,
-                  endDateValue,
-                  startTimeValue,
-                  endTimeValue
-                ) ? (
-                  <>
-                    <span className="text-green-600">✅</span>
-                    <span className="text-xs font-medium">
-                      Valid date-time range
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-red-600">❌</span>
-                    <span className="text-xs font-medium">
-                      Invalid range - End time must be after start time
-                    </span>
-                  </>
-                )}
-              </div>
-            )}
-
-            {/* Range Duration */}
-            {startDateValue &&
-              endDateValue &&
-              startTimeValue &&
-              endTimeValue &&
-              validateDateTimeRange(
-                startDateValue,
-                endDateValue,
-                startTimeValue,
-                endTimeValue
-              ) && (
-                <div className="mt-2 flex items-center gap-2">
-                  <span className="text-blue-600">⏳</span>
-                  <span className="text-xs font-medium opacity-75">
-                    Duration:{" "}
-                    {calculateDuration(
-                      startDateValue,
-                      endDateValue,
-                      startTimeValue,
-                      endTimeValue
-                    )}
-                  </span>
-                </div>
-              )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
