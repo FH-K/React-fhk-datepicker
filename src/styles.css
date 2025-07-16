@@ -1,0 +1,566 @@
+/* React FHK DatePicker - Isolated CSS Styles */
+/* This file contains only the specific styles needed for the date picker components */
+/* It does NOT include Tailwind base styles to avoid conflicts with your app's CSS */
+
+/* Essential grid classes for calendar layout */
+.rfhk-grid {
+  display: grid !important;
+}
+
+.rfhk-grid-cols-7 {
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+
+.rfhk-gap-1 {
+  gap: 0.25rem !important;
+}
+
+/* Calendar container styles */
+.rfhk-calendar-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 50;
+  margin-top: 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid;
+  transition: all 0.3s;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Calendar header */
+.rfhk-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  border-bottom: 1px solid;
+}
+
+/* Calendar header button */
+.rfhk-calendar-header-button {
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.rfhk-calendar-header-button:hover {
+  transform: scale(1.1);
+}
+
+/* Days of week container */
+.rfhk-days-of-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Day of week item */
+.rfhk-day-of-week {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 0;
+}
+
+/* Calendar days container */
+.rfhk-calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Calendar day button */
+.rfhk-calendar-day {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  transform-gpu: true;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rfhk-calendar-day:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.rfhk-calendar-day:active {
+  transform: scale(0.95);
+}
+
+.rfhk-calendar-day:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+/* Calendar footer */
+.rfhk-calendar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  border-top: 1px solid;
+}
+
+/* Today button */
+.rfhk-today-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.15s;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+/* Clear button */
+.rfhk-clear-button {
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.15s;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.rfhk-clear-button:hover {
+  transform: scale(1.1);
+}
+
+/* Input container */
+.rfhk-input-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Input field */
+.rfhk-input {
+  width: 100%;
+  border: 2px solid;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+  outline: none;
+  background: transparent;
+}
+
+.rfhk-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px;
+}
+
+/* Input wrapper */
+.rfhk-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Input icons container */
+.rfhk-input-icons {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Calendar icon */
+.rfhk-calendar-icon {
+  color: #9ca3af;
+}
+
+.rfhk-disabled .rfhk-calendar-icon {
+  opacity: 0.5;
+}
+
+/* Calendar title */
+.rfhk-calendar-title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.rfhk-size-sm .rfhk-calendar-title {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.rfhk-size-lg .rfhk-calendar-title {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+/* Calendar info */
+.rfhk-calendar-info {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.rfhk-theme-dark .rfhk-calendar-info {
+  color: #9ca3af;
+}
+
+/* Helper text */
+.rfhk-helper-text {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* Size variants */
+.rfhk-size-sm .rfhk-input {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.rfhk-size-sm .rfhk-calendar-day {
+  height: 2rem;
+  width: 2rem;
+  font-size: 0.75rem;
+}
+
+.rfhk-size-sm .rfhk-calendar-container {
+  width: 18rem;
+}
+
+.rfhk-size-md .rfhk-input {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+}
+
+.rfhk-size-md .rfhk-calendar-day {
+  height: 2.5rem;
+  width: 2.5rem;
+  font-size: 0.875rem;
+}
+
+.rfhk-size-md .rfhk-calendar-container {
+  width: 20rem;
+}
+
+.rfhk-size-lg .rfhk-input {
+  padding: 1rem 1.25rem;
+  font-size: 1.125rem;
+}
+
+.rfhk-size-lg .rfhk-calendar-day {
+  height: 3rem;
+  width: 3rem;
+  font-size: 1rem;
+}
+
+.rfhk-size-lg .rfhk-calendar-container {
+  width: 24rem;
+}
+
+/* Theme variants */
+.rfhk-theme-light .rfhk-calendar-container {
+  background: white;
+  border-color: #e5e7eb;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.rfhk-theme-light .rfhk-calendar-header {
+  background: linear-gradient(to right, #eff6ff, #eef2ff);
+  color: #1f2937;
+  border-color: #f3f4f6;
+}
+
+.rfhk-theme-light .rfhk-calendar-header-button {
+  color: #3b82f6;
+}
+
+.rfhk-theme-light .rfhk-calendar-header-button:hover {
+  background: #dbeafe;
+}
+
+.rfhk-theme-light .rfhk-day-of-week {
+  color: #6b7280;
+}
+
+.rfhk-theme-light .rfhk-calendar-day {
+  color: #374151;
+}
+
+.rfhk-theme-light .rfhk-calendar-day:hover {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+.rfhk-theme-light .rfhk-calendar-day.rfhk-selected {
+  background: linear-gradient(to right, #3b82f6, #2563eb);
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: scale(1.05);
+}
+
+.rfhk-theme-light .rfhk-calendar-day.rfhk-today {
+  background: linear-gradient(to right, #dbeafe, #bfdbfe);
+  color: #1e40af;
+  font-weight: 600;
+  box-shadow: 0 0 0 2px #93c5fd;
+}
+
+.rfhk-theme-light .rfhk-calendar-day.rfhk-outside {
+  color: #9ca3af;
+}
+
+.rfhk-theme-light .rfhk-calendar-day.rfhk-outside:hover {
+  color: #6b7280;
+}
+
+.rfhk-theme-light .rfhk-calendar-footer {
+  background: #f9fafb;
+  border-color: #f3f4f6;
+}
+
+.rfhk-theme-light .rfhk-today-button {
+  color: #3b82f6;
+}
+
+.rfhk-theme-light .rfhk-today-button:hover {
+  color: #1e40af;
+  background: #eff6ff;
+}
+
+.rfhk-theme-light .rfhk-clear-button {
+  color: #9ca3af;
+}
+
+.rfhk-theme-light .rfhk-clear-button:hover {
+  color: #ef4444;
+}
+
+.rfhk-theme-light .rfhk-input {
+  background: white;
+  border-color: #d1d5db;
+  color: #111827;
+}
+
+.rfhk-theme-light .rfhk-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.rfhk-theme-light .rfhk-input::placeholder {
+  color: #6b7280;
+}
+
+.rfhk-theme-light .rfhk-helper-text {
+  color: #6b7280;
+}
+
+.rfhk-theme-light .rfhk-helper-text.rfhk-error {
+  color: #dc2626;
+}
+
+.rfhk-theme-dark .rfhk-calendar-container {
+  background: #1f2937;
+  border-color: #4b5563;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.rfhk-theme-dark .rfhk-calendar-header {
+  background: linear-gradient(to right, #1f2937, #374151);
+  color: white;
+  border-color: #4b5563;
+}
+
+.rfhk-theme-dark .rfhk-calendar-header-button {
+  color: #60a5fa;
+}
+
+.rfhk-theme-dark .rfhk-calendar-header-button:hover {
+  background: #4b5563;
+}
+
+.rfhk-theme-dark .rfhk-day-of-week {
+  color: #9ca3af;
+}
+
+.rfhk-theme-dark .rfhk-calendar-day {
+  color: #d1d5db;
+}
+
+.rfhk-theme-dark .rfhk-calendar-day:hover {
+  background: #374151;
+  color: #60a5fa;
+}
+
+.rfhk-theme-dark .rfhk-calendar-day.rfhk-selected {
+  background: linear-gradient(to right, #2563eb, #1d4ed8);
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.rfhk-theme-dark .rfhk-calendar-day.rfhk-today {
+  background: linear-gradient(to right, #1e40af, #1e3a8a);
+  color: #bfdbfe;
+  font-weight: 600;
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.rfhk-theme-dark .rfhk-calendar-day.rfhk-outside {
+  color: #6b7280;
+}
+
+.rfhk-theme-dark .rfhk-calendar-day.rfhk-outside:hover {
+  color: #9ca3af;
+}
+
+.rfhk-theme-dark .rfhk-calendar-footer {
+  background: #1f2937;
+  border-color: #4b5563;
+}
+
+.rfhk-theme-dark .rfhk-today-button {
+  color: #60a5fa;
+}
+
+.rfhk-theme-dark .rfhk-today-button:hover {
+  color: #bfdbfe;
+  background: #374151;
+}
+
+.rfhk-theme-dark .rfhk-clear-button {
+  color: #6b7280;
+}
+
+.rfhk-theme-dark .rfhk-clear-button:hover {
+  color: #f87171;
+}
+
+.rfhk-theme-dark .rfhk-input {
+  background: #1f2937;
+  border-color: #4b5563;
+  color: white;
+}
+
+.rfhk-theme-dark .rfhk-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+}
+
+.rfhk-theme-dark .rfhk-input::placeholder {
+  color: #9ca3af;
+}
+
+.rfhk-theme-dark .rfhk-helper-text {
+  color: #9ca3af;
+}
+
+.rfhk-theme-dark .rfhk-helper-text.rfhk-error {
+  color: #f87171;
+}
+
+/* Variant styles */
+.rfhk-variant-outline .rfhk-input {
+  border-width: 2px;
+}
+
+.rfhk-variant-filled .rfhk-input {
+  border-width: 0;
+  background: #f3f4f6;
+}
+
+.rfhk-variant-filled .rfhk-input:focus {
+  background: white;
+}
+
+.rfhk-theme-dark .rfhk-variant-filled .rfhk-input {
+  background: #374151;
+}
+
+.rfhk-theme-dark .rfhk-variant-filled .rfhk-input:focus {
+  background: #1f2937;
+}
+
+.rfhk-variant-ghost .rfhk-input {
+  border-width: 0;
+  background: transparent;
+}
+
+.rfhk-variant-ghost .rfhk-input:focus {
+  background: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.rfhk-theme-dark .rfhk-variant-ghost .rfhk-input:focus {
+  background: #1f2937;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+}
+
+/* Error state */
+.rfhk-error .rfhk-input {
+  border-color: #ef4444;
+}
+
+.rfhk-error .rfhk-input:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.rfhk-theme-dark .rfhk-error .rfhk-input:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.3);
+}
+
+/* Disabled state */
+.rfhk-disabled .rfhk-input {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.rfhk-disabled .rfhk-input-icons {
+  opacity: 0.5;
+}
+
+/* Animation classes */
+.rfhk-animate-in {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.rfhk-animate-out {
+  opacity: 0;
+  transform: scale(0.95) translateY(-0.5rem);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .rfhk-calendar-container {
+    width: 100% !important;
+    max-width: 18rem;
+  }
+
+  .rfhk-calendar-day {
+    height: 2rem !important;
+    width: 2rem !important;
+    font-size: 0.75rem !important;
+  }
+}

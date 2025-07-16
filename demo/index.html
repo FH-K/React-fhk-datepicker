@@ -817,57 +817,6 @@
                 helperText=""
               />
             </div>
-
-            {(dateValue || timeValue) && (
-              <div
-                className={`mt-4 p-4 rounded-xl border-2 transition-all duration-200 ${
-                  theme === "dark"
-                    ? "bg-purple-900/30 border-purple-700"
-                    : "bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200"
-                }`}
-              >
-                <div
-                  className={`text-sm ${
-                    theme === "dark" ? "text-purple-300" : "text-purple-800"
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-lg">✨</span>
-                    <strong>Enhanced Date-Time Selection</strong>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div
-                      className={`p-3 rounded-lg font-mono text-xs ${
-                        theme === "dark" ? "bg-purple-800/50" : "bg-purple-100"
-                      }`}
-                    >
-                      <div className="font-medium text-xs uppercase tracking-wide mb-1 opacity-75">
-                        Date
-                      </div>
-                      {dateValue || "Not selected"}
-                    </div>
-                    <div
-                      className={`p-3 rounded-lg font-mono text-xs ${
-                        theme === "dark" ? "bg-purple-800/50" : "bg-purple-100"
-                      }`}
-                    >
-                      <div className="font-medium text-xs uppercase tracking-wide mb-1 opacity-75">
-                        Time
-                      </div>
-                      {timeValue || "Not selected"}
-                    </div>
-                  </div>
-                  {dateValue && (
-                    <div className="mt-3 flex items-center gap-2">
-                      <span className="text-green-600">✅</span>
-                      <span className="text-xs font-medium">
-                        Valid enhanced date-time combination
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         );
       };
@@ -1266,27 +1215,10 @@
                     format="simple"
                     separator="/"
                     theme={currentTheme}
+                    calendarClassName="shadow-2xl border-purple-500"
+                    error={!simpleDate}
+                    helperText=""
                   />
-                  {simpleDate && (
-                    <div className="format-display">
-                      <strong>Stored:</strong> {simpleDate}
-                    </div>
-                  )}
-                  {simpleDate && (
-                    <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
-                      }`}
-                    >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify({ date: simpleDate }, null, 2)}
-                      </code>
-                    </div>
-                  )}
                 </div>
 
                 {/* ISO Format */}
@@ -1311,27 +1243,9 @@
                     format="iso"
                     separator="/"
                     theme={currentTheme}
+                    error={!isoDate}
+                    helperText=""
                   />
-                  {isoDate && (
-                    <div className="format-display">
-                      <strong>Stored:</strong> {isoDate}
-                    </div>
-                  )}
-                  {isoDate && (
-                    <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
-                      }`}
-                    >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify({ date: isoDate }, null, 2)}
-                      </code>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
@@ -1363,37 +1277,24 @@
                     format="simple"
                     separator="/"
                     theme={currentTheme}
+                    calendarClassName="shadow-2xl border-blue-500"
+                    error={!range1.isValid}
+                    helperText=""
                   />
-                  {range1.start && (
-                    <div className="format-display mt-3">
-                      <strong>Range:</strong>
-                      <br />
-                      Start: {range1.start}
-                      <br />
-                      End: {range1.end || "Not selected"}
-                    </div>
-                  )}
-                  {range1.start && (
+                  {(range1.start || range1.end) && (
                     <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
+                      className={`mt-3 p-2 rounded text-xs font-mono ${
+                        range1.isValid
+                          ? isDark
+                            ? "bg-green-900/30 text-green-300"
+                            : "bg-green-50 text-green-800"
+                          : isDark
+                          ? "bg-red-900/30 text-red-300"
+                          : "bg-red-50 text-red-800"
                       }`}
                     >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify(
-                          {
-                            startDate: range1.start,
-                            endDate: range1.end || null,
-                            isValid: range1.isValid,
-                          },
-                          null,
-                          2
-                        )}
-                      </code>
+                      Start: {range1.start || "Not selected"} | End:{" "}
+                      {range1.end || "Not selected"}
                     </div>
                   )}
                 </div>
@@ -1421,37 +1322,23 @@
                     format="iso"
                     separator="/"
                     theme={currentTheme}
+                    error={!range2.isValid}
+                    helperText=""
                   />
-                  {range2.start && (
-                    <div className="format-display mt-3">
-                      <strong>ISO Range:</strong>
-                      <br />
-                      Start: {range2.start}
-                      <br />
-                      End: {range2.end || "Not selected"}
-                    </div>
-                  )}
-                  {range2.start && (
+                  {(range2.start || range2.end) && (
                     <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
+                      className={`mt-3 p-2 rounded text-xs font-mono ${
+                        range2.isValid
+                          ? isDark
+                            ? "bg-green-900/30 text-green-300"
+                            : "bg-green-50 text-green-800"
+                          : isDark
+                          ? "bg-red-900/30 text-red-300"
+                          : "bg-red-50 text-red-800"
                       }`}
                     >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify(
-                          {
-                            startDate: range2.start,
-                            endDate: range2.end || null,
-                            isValid: range2.isValid,
-                          },
-                          null,
-                          2
-                        )}
-                      </code>
+                      Start: {range2.start || "Not selected"} | End:{" "}
+                      {range2.end || "Not selected"}
                     </div>
                   )}
                 </div>
@@ -1483,37 +1370,23 @@
                     minDate="2024-01-01"
                     maxDate="2025-12-31"
                     theme={currentTheme}
+                    error={!range3.isValid}
+                    helperText=""
                   />
-                  {range3.start && (
-                    <div className="format-display mt-3">
-                      <strong>Restricted Range:</strong>
-                      <br />
-                      Start: {range3.start}
-                      <br />
-                      End: {range3.end || "Not selected"}
-                    </div>
-                  )}
-                  {range3.start && (
+                  {(range3.start || range3.end) && (
                     <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
+                      className={`mt-3 p-2 rounded text-xs font-mono ${
+                        range3.isValid
+                          ? isDark
+                            ? "bg-green-900/30 text-green-300"
+                            : "bg-green-50 text-green-800"
+                          : isDark
+                          ? "bg-red-900/30 text-red-300"
+                          : "bg-red-50 text-red-800"
                       }`}
                     >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify(
-                          {
-                            startDate: range3.start,
-                            endDate: range3.end || null,
-                            isValid: range3.isValid,
-                          },
-                          null,
-                          2
-                        )}
-                      </code>
+                      Start: {range3.start || "Not selected"} | End:{" "}
+                      {range3.end || "Not selected"}
                     </div>
                   )}
                 </div>
@@ -1545,37 +1418,23 @@
                     minDate="2024-01-01"
                     maxDate="2025-12-31"
                     theme={currentTheme}
+                    error={!range4.isValid}
+                    helperText=""
                   />
-                  {range4.start && (
-                    <div className="format-display mt-3">
-                      <strong>Restricted ISO Range:</strong>
-                      <br />
-                      Start: {range4.start}
-                      <br />
-                      End: {range4.end || "Not selected"}
-                    </div>
-                  )}
-                  {range4.start && (
+                  {(range4.start || range4.end) && (
                     <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
+                      className={`mt-3 p-2 rounded text-xs font-mono ${
+                        range4.isValid
+                          ? isDark
+                            ? "bg-green-900/30 text-green-300"
+                            : "bg-green-50 text-green-800"
+                          : isDark
+                          ? "bg-red-900/30 text-red-300"
+                          : "bg-red-50 text-red-800"
                       }`}
                     >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify(
-                          {
-                            startDate: range4.start,
-                            endDate: range4.end || null,
-                            isValid: range4.isValid,
-                          },
-                          null,
-                          2
-                        )}
-                      </code>
+                      Start: {range4.start || "Not selected"} | End:{" "}
+                      {range4.end || "Not selected"}
                     </div>
                   )}
                 </div>
@@ -1615,42 +1474,23 @@
                     format="simple"
                     separator="/"
                     theme={currentTheme}
+                    error={!dateTimeRange1.isValid}
+                    helperText=""
                   />
-                  {dateTimeRange1.startDate && (
-                    <div className="format-display mt-3">
-                      <strong>Date-Time Range:</strong>
-                      <br />
-                      Start: {dateTimeRange1.startDate}{" "}
-                      {dateTimeRange1.startTime &&
-                        `| ${dateTimeRange1.startTime}`}
-                      <br />
-                      End: {dateTimeRange1.endDate}{" "}
-                      {dateTimeRange1.endTime && `| ${dateTimeRange1.endTime}`}
-                    </div>
-                  )}
-                  {dateTimeRange1.startDate && (
+                  {(dateTimeRange1.startDate || dateTimeRange1.endDate) && (
                     <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
+                      className={`mt-3 p-2 rounded text-xs font-mono ${
+                        dateTimeRange1.isValid
+                          ? isDark
+                            ? "bg-green-900/30 text-green-300"
+                            : "bg-green-50 text-green-800"
+                          : isDark
+                          ? "bg-red-900/30 text-red-300"
+                          : "bg-red-50 text-red-800"
                       }`}
                     >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify(
-                          {
-                            startDate: dateTimeRange1.startDate,
-                            endDate: dateTimeRange1.endDate || null,
-                            startTime: dateTimeRange1.startTime || null,
-                            endTime: dateTimeRange1.endTime || null,
-                            isValid: dateTimeRange1.isValid,
-                          },
-                          null,
-                          2
-                        )}
-                      </code>
+                      Start: {dateTimeRange1.startDate || "Not selected"} | End:{" "}
+                      {dateTimeRange1.endDate || "Not selected"}
                     </div>
                   )}
                 </div>
@@ -1682,44 +1522,9 @@
                     format="iso"
                     separator="/"
                     theme={currentTheme}
+                    error={!dateTimeRange2.isValid}
+                    helperText=""
                   />
-                  {dateTimeRange2.startDate && (
-                    <div className="format-display mt-3">
-                      <strong>ISO Date-Time Range:</strong>
-                      <br />
-                      Start: {dateTimeRange2.startDate}{" "}
-                      {dateTimeRange2.startTime &&
-                        `| ${dateTimeRange2.startTime}`}
-                      <br />
-                      End: {dateTimeRange2.endDate}{" "}
-                      {dateTimeRange2.endTime && `| ${dateTimeRange2.endTime}`}
-                    </div>
-                  )}
-                  {dateTimeRange2.startDate && (
-                    <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
-                      }`}
-                    >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify(
-                          {
-                            startDate: dateTimeRange2.startDate,
-                            endDate: dateTimeRange2.endDate || null,
-                            startTime: dateTimeRange2.startTime || null,
-                            endTime: dateTimeRange2.endTime || null,
-                            isValid: dateTimeRange2.isValid,
-                          },
-                          null,
-                          2
-                        )}
-                      </code>
-                    </div>
-                  )}
                 </div>
 
                 {/* Single Date-Time */}
@@ -1745,37 +1550,23 @@
                     format="simple"
                     separator="/"
                     theme={currentTheme}
+                    error={!timeOnlyRange.isValid}
+                    helperText=""
                   />
-                  {timeOnlyRange.date && (
-                    <div className="format-display mt-3">
-                      <strong>Single Date-Time:</strong>
-                      <br />
-                      Date: {timeOnlyRange.date}
-                      <br />
-                      Time: {timeOnlyRange.time || "Not selected"}
-                    </div>
-                  )}
-                  {timeOnlyRange.date && (
+                  {(timeOnlyRange.date || timeOnlyRange.time) && (
                     <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
+                      className={`mt-3 p-2 rounded text-xs font-mono ${
+                        timeOnlyRange.isValid
+                          ? isDark
+                            ? "bg-green-900/30 text-green-300"
+                            : "bg-green-50 text-green-800"
+                          : isDark
+                          ? "bg-red-900/30 text-red-300"
+                          : "bg-red-50 text-red-800"
                       }`}
                     >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify(
-                          {
-                            date: timeOnlyRange.date,
-                            time: timeOnlyRange.time || null,
-                            isValid: timeOnlyRange.isValid,
-                          },
-                          null,
-                          2
-                        )}
-                      </code>
+                      Date: {timeOnlyRange.date || "Not selected"} | Time:{" "}
+                      {timeOnlyRange.time || "Not selected"}
                     </div>
                   )}
                 </div>
@@ -1805,37 +1596,23 @@
                     format="iso"
                     separator="/"
                     theme={currentTheme}
+                    error={!timeOnlyRangeISO.isValid}
+                    helperText=""
                   />
-                  {timeOnlyRangeISO.date && (
-                    <div className="format-display mt-3">
-                      <strong>Single Date-Time ISO:</strong>
-                      <br />
-                      Date: {timeOnlyRangeISO.date}
-                      <br />
-                      Time: {timeOnlyRangeISO.time || "Not selected"}
-                    </div>
-                  )}
-                  {timeOnlyRangeISO.date && (
+                  {(timeOnlyRangeISO.date || timeOnlyRangeISO.time) && (
                     <div
-                      className={`format-display mt-2 border ${
-                        isDark
-                          ? "bg-green-900/30 border-green-700"
-                          : "bg-green-50 border-green-200"
+                      className={`mt-3 p-2 rounded text-xs font-mono ${
+                        timeOnlyRangeISO.isValid
+                          ? isDark
+                            ? "bg-green-900/30 text-green-300"
+                            : "bg-green-50 text-green-800"
+                          : isDark
+                          ? "bg-red-900/30 text-red-300"
+                          : "bg-red-50 text-red-800"
                       }`}
                     >
-                      <strong>📤 Backend Data:</strong>
-                      <br />
-                      <code className="text-xs">
-                        {JSON.stringify(
-                          {
-                            date: timeOnlyRangeISO.date,
-                            time: timeOnlyRangeISO.time || null,
-                            isValid: timeOnlyRangeISO.isValid,
-                          },
-                          null,
-                          2
-                        )}
-                      </code>
+                      Date: {timeOnlyRangeISO.date || "Not selected"} | Time:{" "}
+                      {timeOnlyRangeISO.time || "Not selected"}
                     </div>
                   )}
                 </div>
@@ -1872,19 +1649,16 @@
                     size="md"
                     variant="outline"
                   />
-                  {enhancedDateTime.date && (
-                    <div className="format-display mt-3 bg-white/20 border-white/30">
-                      <strong className="text-white">
-                        Enhanced Selection:
-                      </strong>
-                      <br />
-                      <span className="text-purple-200">
-                        Date: {enhancedDateTime.date}
-                      </span>
-                      <br />
-                      <span className="text-purple-200">
-                        Time: {enhancedDateTime.time || "Not selected"}
-                      </span>
+                  {(enhancedDateTime.date || enhancedDateTime.time) && (
+                    <div
+                      className={`mt-3 p-2 rounded text-xs font-mono ${
+                        enhancedDateTime.isValid
+                          ? "bg-green-500/20 text-green-200 border border-green-500/30"
+                          : "bg-red-500/20 text-red-200 border border-red-500/30"
+                      }`}
+                    >
+                      Date: {enhancedDateTime.date || "Not selected"} | Time:{" "}
+                      {enhancedDateTime.time || "Not selected"}
                     </div>
                   )}
                 </div>
@@ -1912,23 +1686,6 @@
                     size="md"
                     variant="filled"
                   />
-                  {enhancedDateTimeRange.startDate && (
-                    <div className="format-display mt-3 bg-white/20 border-white/30">
-                      <strong className="text-white">Enhanced Range:</strong>
-                      <br />
-                      <span className="text-purple-200">
-                        Start: {enhancedDateTimeRange.startDate}{" "}
-                        {enhancedDateTimeRange.startTime &&
-                          `| ${enhancedDateTimeRange.startTime}`}
-                      </span>
-                      <br />
-                      <span className="text-purple-200">
-                        End: {enhancedDateTimeRange.endDate}{" "}
-                        {enhancedDateTimeRange.endTime &&
-                          `| ${enhancedDateTimeRange.endTime}`}
-                      </span>
-                    </div>
-                  )}
                 </div>
               </div>
             </div>

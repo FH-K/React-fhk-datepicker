@@ -6,6 +6,7 @@ const DatePicker = ({
   format = "simple", // "simple", "iso", "range"
   separator = "/", // user can change "/" to "-" or other separators
   className = "",
+  calendarClassName = "", // Custom className for calendar popup
   disabled = false,
   minDate = null,
   maxDate = null,
@@ -439,24 +440,25 @@ const DatePicker = ({
   // Get input classes based on state
   const getInputClasses = () => {
     const baseClasses = `
-      w-full pr-10 rounded-xl transition-all duration-200 font-medium
-      focus:outline-none placeholder:font-normal
-      ${currentSize.input} ${currentVariant.base}
+      w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 
+      rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 
+      placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none 
+      focus:ring-2 focus:ring-blue-500 pr-10 transition-all duration-200
     `;
 
     if (disabled) {
-      return `${baseClasses} ${currentVariant.disabled} cursor-not-allowed`;
+      return `${baseClasses} opacity-50 cursor-not-allowed bg-gray-100 dark:bg-gray-700`;
     }
 
     if (error) {
-      return `${baseClasses} ${currentVariant.error}`;
+      return `${baseClasses} border-red-500 focus:ring-red-500`;
     }
 
     if (showCalendar) {
-      return `${baseClasses} ${currentVariant.focus}`;
+      return `${baseClasses} border-blue-500 focus:ring-blue-500`;
     }
 
-    return `${baseClasses} ${currentVariant.normal}`;
+    return baseClasses;
   };
 
   // Sanitize className to prevent CSS injection
@@ -467,11 +469,16 @@ const DatePicker = ({
   };
 
   const sanitizedClassName = sanitizeClassName(className);
+  const sanitizedCalendarClassName = sanitizeClassName(calendarClassName);
 
   return (
-    <div className={`relative ${sanitizedClassName}`}>
+    <div
+      className={`rfhk-input-container rfhk-theme-${theme} rfhk-size-${size} rfhk-variant-${variant} ${
+        error ? "rfhk-error" : ""
+      } ${disabled ? "rfhk-disabled" : ""} ${sanitizedClassName}`}
+    >
       {/* Input Field */}
-      <div className="relative">
+      <div className="rfhk-input-wrapper">
         <input
           ref={inputRef}
           type="text"
@@ -481,17 +488,17 @@ const DatePicker = ({
           onBlur={handleInputBlur}
           placeholder={placeholder}
           disabled={disabled}
-          className={`${getInputClasses()} ${currentTheme.input}`}
+          className="rfhk-input"
         />
 
         {/* Icons Container */}
-        <div className="absolute inset-y-0 right-0 flex items-center pr-3 space-x-1">
+        <div className="rfhk-input-icons">
           {/* Clear Button */}
           {showClearButton && inputValue && !disabled && (
             <button
               type="button"
               onClick={handleClear}
-              className={`${currentTheme.clear} transition-colors duration-150 hover:scale-110`}
+              className="rfhk-clear-button"
             >
               <svg
                 className={currentSize.icon}
@@ -510,7 +517,7 @@ const DatePicker = ({
           )}
 
           {/* Calendar Icon */}
-          <div className={`text-gray-400 ${disabled ? "opacity-50" : ""}`}>
+          <div className="rfhk-calendar-icon">
             <svg
               className={currentSize.icon}
               fill="none"
@@ -530,9 +537,7 @@ const DatePicker = ({
 
       {/* Helper Text */}
       {helperText && (
-        <p
-          className={`mt-1 text-xs ${error ? "text-red-600" : "text-gray-500"}`}
-        >
+        <p className={`rfhk-helper-text ${error ? "rfhk-error" : ""}`}>
           {helperText}
         </p>
       )}
@@ -542,29 +547,19 @@ const DatePicker = ({
         <div
           ref={calendarRef}
           className={`
-            absolute top-full left-0 z-50 mt-2 rounded-2xl border transition-all duration-300
-            ${currentSize.calendar} ${currentTheme.calendar} ${
-            currentTheme.calendarGradient
-          }
-            ${
-              isAnimating
-                ? "opacity-100 scale-100 translate-y-0"
-                : "opacity-0 scale-95 -translate-y-2"
-            }
+            rfhk-calendar-container rfhk-theme-${theme} rfhk-size-${size}
+            ${isAnimating ? "rfhk-animate-in" : "rfhk-animate-out"}
+            ${sanitizedCalendarClassName}
           `}
           style={{
             transformOrigin: "top left",
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
           }}
         >
           {/* Calendar Header */}
-          <div
-            className={`flex items-center justify-between p-4 rounded-t-2xl ${currentTheme.header}`}
-          >
+          <div className="rfhk-calendar-header">
             <button
               onClick={() => navigateMonth(-1)}
-              className={`p-2 rounded-xl transition-all duration-150 ${currentTheme.headerButton} hover:scale-110`}
+              className="rfhk-calendar-header-button"
             >
               <svg
                 className={currentSize.icon}
@@ -581,13 +576,13 @@ const DatePicker = ({
               </svg>
             </button>
 
-            <h2 className={`font-bold ${currentSize.headerText}`}>
+            <h2 className="rfhk-calendar-title">
               {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
             </h2>
 
             <button
               onClick={() => navigateMonth(1)}
-              className={`p-2 rounded-xl transition-all duration-150 ${currentTheme.headerButton} hover:scale-110`}
+              className="rfhk-calendar-header-button"
             >
               <svg
                 className={currentSize.icon}
@@ -606,19 +601,16 @@ const DatePicker = ({
           </div>
 
           {/* Days of Week */}
-          <div className="grid grid-cols-7 gap-1 p-4 pb-2">
+          <div className="rfhk-days-of-week">
             {dayNames.map((day) => (
-              <div
-                key={day}
-                className="text-center text-xs font-bold text-gray-500 uppercase tracking-wider py-2"
-              >
+              <div key={day} className="rfhk-day-of-week">
                 {day}
               </div>
             ))}
           </div>
 
           {/* Calendar Days */}
-          <div className="grid grid-cols-7 gap-1 px-4 pb-4">
+          <div className="rfhk-calendar-days">
             {getDaysInMonth(currentMonth).map((dayObj, index) => {
               const { date, isCurrentMonth } = dayObj;
               const isDisabled = isDateDisabled(date);
@@ -631,35 +623,14 @@ const DatePicker = ({
                   onClick={() => !isDisabled && handleDateSelect(date)}
                   disabled={isDisabled}
                   className={`
-                    ${
-                      currentSize.dayButton
-                    } rounded-xl font-semibold transition-all duration-200
-                    transform-gpu relative overflow-hidden
-                    ${
-                      isSelectedDate
-                        ? currentTheme.selectedDay
-                        : isTodayDate
-                        ? currentTheme.todayDay
-                        : isCurrentMonth
-                        ? currentTheme.day
-                        : currentTheme.outsideDay
-                    }
-                    ${
-                      isDisabled
-                        ? "opacity-25 cursor-not-allowed"
-                        : "cursor-pointer active:scale-95"
-                    }
-                    ${
-                      !isSelectedDate && !isDisabled && isCurrentMonth
-                        ? "hover:scale-110 hover:z-10"
-                        : ""
-                    }
+                    rfhk-calendar-day
+                    ${isSelectedDate ? "rfhk-selected" : ""}
+                    ${isTodayDate ? "rfhk-today" : ""}
+                    ${!isCurrentMonth ? "rfhk-outside" : ""}
+                    ${isDisabled ? "rfhk-disabled" : ""}
                   `}
                 >
                   {date.getDate()}
-                  {isSelectedDate && (
-                    <div className="absolute inset-0 bg-white/20 rounded-xl"></div>
-                  )}
                 </button>
               );
             })}
@@ -667,17 +638,12 @@ const DatePicker = ({
 
           {/* Footer */}
           {showTodayButton && (
-            <div
-              className={`flex justify-between items-center p-4 rounded-b-2xl ${currentTheme.footer}`}
-            >
-              <button
-                onClick={goToToday}
-                className="px-4 py-2 text-sm font-semibold text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-all duration-150"
-              >
+            <div className="rfhk-calendar-footer">
+              <button onClick={goToToday} className="rfhk-today-button">
                 Today
               </button>
 
-              <div className="text-xs text-gray-500 font-medium">
+              <div className="rfhk-calendar-info">
                 {format} • {separator}
               </div>
             </div>

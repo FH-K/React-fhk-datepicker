@@ -14,7 +14,7 @@ A comprehensive React date and time picker library with multiple components for 
 - **Error Handling**: Built-in error states with helper text support
 - **Customizable UI**: Light and dark themes with Tailwind CSS styling
 - **Accessibility**: Keyboard navigation and screen reader support
-- **TypeScript Ready**: Full TypeScript support with proper type definitions
+- **TypeScript Ready**: Full TypeScript support with comprehensive type definitions
 - **No Dependencies**: Zero external dependencies beyond React
 - **Timezone Safe**: No timezone offset issues when selecting dates
 
@@ -26,6 +26,8 @@ npm install react-fhk-datepicker
 
 ## 🎯 Quick Start
 
+**✅ IMPORTANT: Import the CSS file for optimal styling (no conflicts with your app's CSS!)**
+
 ```jsx
 import {
   DatePicker,
@@ -33,6 +35,9 @@ import {
   DateTimeRangePicker,
   DateTimePicker,
 } from "react-fhk-datepicker";
+
+// ✅ REQUIRED: Import the isolated CSS file (won't affect your app's styles)
+import "react-fhk-datepicker/style.css";
 
 function App() {
   const handleDateSelect = (date) => {
@@ -49,6 +54,31 @@ function App() {
     />
   );
 }
+```
+
+### TypeScript Support
+
+The package includes comprehensive TypeScript definitions. No additional `@types` package needed!
+
+```tsx
+import { DatePicker, DatePickerProps } from "react-fhk-datepicker";
+
+const MyComponent: React.FC = () => {
+  const handleDateSelect: DatePickerProps["onDateSelect"] = (date) => {
+    console.log("Selected date:", date);
+  };
+
+  return (
+    <DatePicker
+      onDateSelect={handleDateSelect}
+      placeholder="Choose a date"
+      format="simple"
+      size="md"
+      variant="outline"
+      calendarClassName="shadow-2xl border-purple-500"
+    />
+  );
+};
 ```
 
 ## 📋 Components
@@ -76,6 +106,7 @@ import { DatePicker } from "react-fhk-datepicker";
   error={false}
   helperText=""
   disabled={false}
+  calendarClassName="" // Custom className for calendar popup
 />;
 ```
 
@@ -96,6 +127,7 @@ import { DatePicker } from "react-fhk-datepicker";
 - `error`: Show error state styling
 - `helperText`: Helper text below input
 - `disabled`: Disable the picker
+- `calendarClassName`: Custom CSS class name for the calendar popup
 
 ### 2. DateRangePicker (Date Range)
 
@@ -139,6 +171,7 @@ import { DateRangePicker } from "react-fhk-datepicker";
 - `disabled`: Disable the picker
 - `startDate`: Initial start date
 - `endDate`: Initial end date
+- `calendarClassName`: Custom CSS class name for the calendar popup
 
 ### 3. DateTimeRangePicker (Date-Time Range)
 
@@ -185,6 +218,7 @@ import { DateTimeRangePicker } from "react-fhk-datepicker";
 - `endDate`: Initial end date
 - `startTime`: Initial start time
 - `endTime`: Initial end time
+- `calendarClassName`: Custom CSS class name for the calendar popup
 
 ### 4. DateTimePicker (Single Date-Time)
 
@@ -225,6 +259,7 @@ import { DateTimePicker } from "react-fhk-datepicker";
 - `disabled`: Disable the picker
 - `date`: Initial date
 - `time`: Initial time
+- `calendarClassName`: Custom CSS class name for the calendar popup
 
 ## 🎨 UI Features
 
@@ -350,12 +385,89 @@ import { DateTimePicker } from "react-fhk-datepicker";
 
 ## 🎨 Styling
 
-The components use Tailwind CSS classes and support both light and dark themes with enhanced UI features:
+**⚠️ IMPORTANT: You MUST import the CSS file for the calendar to display correctly!**
 
-- **Modern Design**: Rounded corners, gradients, and smooth animations
-- **Responsive**: Works on all screen sizes
-- **Accessible**: Proper focus states and keyboard navigation
-- **Customizable**: Easy to override with custom CSS classes
+This library uses Tailwind CSS for styling. The calendar layout requires specific CSS classes that are included in the provided CSS file.
+
+### Standardized Input Styles
+
+All input fields use consistent, modern styling with:
+
+- **Base styles**: `w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400`
+- **Focus states**: `focus:outline-none focus:ring-2 focus:ring-blue-500`
+- **Dynamic states**: Error (red border/ring), disabled (opacity + gray background), active (blue border/ring)
+- **Dark mode support**: All styles include dark mode variants
+
+### Required CSS Import
+
+**You MUST import the CSS file in your app (no conflicts with your existing styles!):**
+
+```js
+import { DatePicker, DateRangePicker } from "react-fhk-datepicker";
+import "react-fhk-datepicker/style.css"; // ← REQUIRED for proper grid layout
+```
+
+**Without this import, the calendar will display as a vertical list instead of a proper grid!**
+
+### Alternative Import Methods
+
+**Option 1: ES6 Import (Recommended)**
+
+```js
+import "react-fhk-datepicker/style.css";
+```
+
+**Option 2: HTML Link Tag**
+
+```html
+<link
+  rel="stylesheet"
+  href="node_modules/react-fhk-datepicker/dist/style.css"
+/>
+```
+
+**Option 3: CDN (if available)**
+
+```html
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/react-fhk-datepicker/dist/style.css"
+/>
+```
+
+### What Happens Without CSS Import
+
+- ❌ Calendar displays as vertical list
+- ❌ Dates are not in a grid layout
+- ❌ Poor user experience
+
+### What Happens With CSS Import
+
+- ✅ Calendar displays as proper 7-column grid
+- ✅ Dates are arranged in table-like structure
+- ✅ Professional appearance and usability
+
+**Note:** The CSS file uses isolated class names (prefixed with `rfhk-`) to prevent conflicts with your existing styles, making it lightweight and safe to use in any project.
+
+## 🔧 Troubleshooting
+
+### Calendar Displaying as Vertical List
+
+If your calendar appears as a vertical list instead of a proper 7-column grid:
+
+1. **Make sure you've imported the CSS file:**
+
+   ```jsx
+   import "react-fhk-datepicker/style.css";
+   ```
+
+2. **Check that the CSS import is not being blocked by your bundler**
+
+3. **Verify the CSS file is being loaded in your browser's developer tools**
+
+4. **If using a custom build setup, ensure the CSS file is included in your build process**
+
+The package includes inline styles as a fallback, but the CSS import is still required for optimal styling.
 
 ### Dark Theme Example
 
@@ -399,6 +511,23 @@ The components use Tailwind CSS classes and support both light and dark themes w
 <DatePicker separator="-" format="simple" onDateSelect={handleDateSelect} />
 // Output: "2025-06-30"
 ```
+
+### Custom Calendar Styling
+
+```jsx
+<DatePicker
+  onDateSelect={handleDateSelect}
+  calendarClassName="my-custom-calendar shadow-2xl border-purple-500"
+  placeholder="Choose a date"
+/>
+```
+
+You can add custom CSS classes to style the calendar popup specifically. This is useful for:
+
+- Custom shadows and borders
+- Brand-specific styling
+- Integration with your app's design system
+- Overriding default calendar appearance
 
 ### Controlled Components
 

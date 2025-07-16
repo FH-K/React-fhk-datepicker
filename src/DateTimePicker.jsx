@@ -9,6 +9,7 @@ const DateTimePicker = ({
   format = "simple", // "simple", "iso", "range"
   separator = "/",
   className = "",
+  calendarClassName = "", // Custom className for calendar popup
   disabled = false,
   minDate = null,
   maxDate = null,
@@ -98,6 +99,7 @@ const DateTimePicker = ({
           autoFocus={autoFocus}
           error={error}
           helperText={helperText}
+          calendarClassName={calendarClassName}
         />
       </div>
 

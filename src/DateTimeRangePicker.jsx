@@ -11,6 +11,7 @@ const DateTimeRangePicker = ({
   format = "simple", // "simple", "iso", "range"
   separator = "/",
   className = "",
+  calendarClassName = "", // Custom className for calendar popup
   disabled = false,
   minDate = null,
   maxDate = null,
@@ -268,6 +269,7 @@ const DateTimeRangePicker = ({
           autoFocus={autoFocus}
           error={error}
           helperText={helperText}
+          calendarClassName={calendarClassName}
         />
       </div>
 

@@ -8,6 +8,7 @@ const DateRangePicker = ({
   format = "simple", // "simple", "iso", "range"
   separator = "/",
   className = "",
+  calendarClassName = "", // Custom className for calendar popup
   disabled = false,
   minDate = null,
   maxDate = null,
@@ -181,6 +182,7 @@ const DateRangePicker = ({
           error={error}
           helperText={helperText}
           date={startDateValue}
+          calendarClassName={calendarClassName}
         />
       </div>
 
@@ -206,38 +208,9 @@ const DateRangePicker = ({
           error={error}
           helperText={helperText}
           date={endDateValue}
+          calendarClassName={calendarClassName}
         />
       </div>
-
-      {/* Range Display */}
-      {(startDateValue || endDateValue) && (
-        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <div className="text-sm text-blue-800">
-            <strong>Selected Range:</strong>
-            <div className="mt-1 font-mono text-xs">
-              {startDateValue
-                ? `Start: ${startDateValue}`
-                : "Start: Not selected"}
-            </div>
-            <div className="font-mono text-xs">
-              {endDateValue
-                ? `End: ${formattedEndDate || endDateValue}`
-                : "End: Not selected"}
-            </div>
-            {startDateValue && endDateValue && (
-              <div className="mt-2 text-xs">
-                {!isDateBefore(endDateValue, startDateValue) ? (
-                  <span className="text-green-600">✅ Valid range</span>
-                ) : (
-                  <span className="text-red-600">
-                    ❌ Invalid range (end before start)
-                  </span>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
