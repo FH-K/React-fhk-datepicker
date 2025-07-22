@@ -937,7 +937,7 @@ export default function EnhancedDatePickerDemo() {
                 currentTheme === "dark" ? "text-white" : "text-gray-900"
               }`}
             >
-              📅 Date Formats
+              Date Formats
             </h3>
 
             <div className="space-y-4">

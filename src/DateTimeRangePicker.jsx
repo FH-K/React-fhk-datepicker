@@ -301,14 +301,6 @@ const DateTimeRangePicker = ({
             : "bg-gray-50 border-gray-200"
         }`}
       >
-        <div
-          className={`text-sm font-medium mb-4 ${
-            theme === "dark" ? "text-gray-300" : "text-gray-700"
-          }`}
-        >
-          📅 Date-Time Range Selection
-        </div>
-
         {/* Responsive Grid Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Start Date */}
@@ -318,7 +310,7 @@ const DateTimeRangePicker = ({
                 theme === "dark" ? "text-gray-300" : "text-gray-700"
               }`}
             >
-              📅 Start Date
+              Start Date
             </label>
             <DatePicker
               onDateSelect={(date) => {
@@ -357,7 +349,7 @@ const DateTimeRangePicker = ({
                 theme === "dark" ? "text-gray-300" : "text-gray-700"
               }`}
             >
-              ⏰ Start Time
+              Start Time
             </label>
             <TimePicker
               value={startTimeValue}
@@ -381,7 +373,7 @@ const DateTimeRangePicker = ({
                 theme === "dark" ? "text-gray-300" : "text-gray-700"
               }`}
             >
-              📅 End Date
+              End Date
             </label>
             <DatePicker
               onDateSelect={(date) => {
@@ -420,7 +412,7 @@ const DateTimeRangePicker = ({
                 theme === "dark" ? "text-gray-300" : "text-gray-700"
               }`}
             >
-              ⏱️ End Time
+              End Time
             </label>
             <TimePicker
               value={endTimeValue}

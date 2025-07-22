@@ -83,7 +83,7 @@ const DateTimePicker = ({
               theme === "dark" ? "text-gray-300" : "text-gray-700"
             }`}
           >
-            📅 Date
+            Date
           </label>
           <DatePicker
             onDateSelect={handleDateSelect}

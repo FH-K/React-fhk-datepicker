@@ -169,7 +169,7 @@ const DateRangePicker = ({
               theme === "dark" ? "text-gray-300" : "text-gray-700"
             }`}
           >
-            📅 Start Date
+            Start Date
           </label>
           <DatePicker
             onDateSelect={handleStartDateSelect}
@@ -199,7 +199,7 @@ const DateRangePicker = ({
               theme === "dark" ? "text-gray-300" : "text-gray-700"
             }`}
           >
-            📅 End Date
+            End Date
           </label>
           <DatePicker
             onDateSelect={handleEndDateSelect}
