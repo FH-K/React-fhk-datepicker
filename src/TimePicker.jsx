@@ -13,6 +13,8 @@ const TimePicker = ({
   className = "",
   error = false,
   helperText = "",
+  bgColorLight,
+  bgColorDark,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHour, setSelectedHour] = useState("");
@@ -335,6 +337,10 @@ const TimePicker = ({
       className={`rfhk-timepicker-container rfhk-theme-${theme} rfhk-size-${size} rfhk-variant-${variant} ${
         error ? "rfhk-error" : ""
       } ${disabled ? "rfhk-disabled" : ""} ${sanitizedClassName}`}
+      style={{
+        background:
+          theme === "dark" ? bgColorDark || "#1f2937" : bgColorLight || "#fff",
+      }}
     >
       {/* Input Field */}
       <div className="rfhk-timepicker-input-wrapper">

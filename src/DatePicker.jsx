@@ -18,6 +18,8 @@ const DatePicker = ({
   autoFocus = false,
   error = false,
   helperText = "",
+  bgColorLight,
+  bgColorDark,
 }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [displayDate, setDisplayDate] = useState("");
@@ -475,6 +477,10 @@ const DatePicker = ({
       className={`rfhk-input-container rfhk-theme-${theme} rfhk-size-${size} rfhk-variant-${variant} ${
         error ? "rfhk-error" : ""
       } ${disabled ? "rfhk-disabled" : ""} ${sanitizedClassName}`}
+      style={{
+        background:
+          theme === "dark" ? bgColorDark || "#1f2937" : bgColorLight || "#fff",
+      }}
     >
       {/* Input Field */}
       <div className="rfhk-input-wrapper">

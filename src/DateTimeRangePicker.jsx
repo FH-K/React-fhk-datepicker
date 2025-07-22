@@ -31,6 +31,8 @@ const DateTimeRangePicker = ({
   helperText = "",
   timeFormat = "24", // "12" or "24"
   timeStep = "1", // "1" for seconds, "60" for minutes only
+  bgColorLight,
+  bgColorDark,
 }) => {
   const [startDateValue, setStartDateValue] = useState(startDate || "");
   const [endDateValue, setEndDateValue] = useState(endDate || "");
@@ -292,7 +294,13 @@ const DateTimeRangePicker = ({
   }, [endTime]);
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div
+      className={`space-y-4 ${className}`}
+      style={{
+        background:
+          theme === "dark" ? bgColorDark || "#1f2937" : bgColorLight || "#fff",
+      }}
+    >
       {/* Combined Date-Time Range Picker */}
       <div
         className={`p-4 rounded-xl border-2 ${

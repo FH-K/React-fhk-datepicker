@@ -134,6 +134,8 @@ import { DatePicker } from "react-fhk-datepicker";
 - `helperText`: Helper text below input
 - `disabled`: Disable the picker
 - `calendarClassName`: Custom CSS class name for the calendar popup
+- `bgColorLight`: Custom background color for light mode (optional)
+- `bgColorDark`: Custom background color for dark mode (optional)
 
 ### 2. DateRangePicker (Date Range)
 
@@ -185,6 +187,8 @@ import { DateRangePicker } from "react-fhk-datepicker";
 - `startDate`: Initial start date
 - `endDate`: Initial end date
 - `calendarClassName`: Custom CSS class name for the calendar popup
+- `bgColorLight`: Custom background color for light mode (optional)
+- `bgColorDark`: Custom background color for dark mode (optional)
 
 ### 3. DateTimeRangePicker (Date-Time Range)
 
@@ -242,6 +246,8 @@ import { DateTimeRangePicker } from "react-fhk-datepicker";
 - `timeFormat`: Time format ("12", "24")
 - `timeStep`: Time step ("1" for seconds, "60" for minutes only)
 - `calendarClassName`: Custom CSS class name for the calendar popup
+- `bgColorLight`: Custom background color for light mode (optional)
+- `bgColorDark`: Custom background color for dark mode (optional)
 
 ### 4. DateTimePicker (Single Date-Time)
 
@@ -292,6 +298,8 @@ import { DateTimePicker } from "react-fhk-datepicker";
 - `timeFormat`: Time format ("12", "24")
 - `timeStep`: Time step ("1" for seconds, "60" for minutes only)
 - `calendarClassName`: Custom CSS class name for the calendar popup
+- `bgColorLight`: Custom background color for light mode (optional)
+- `bgColorDark`: Custom background color for dark mode (optional)
 
 ### 5. TimePicker (Standalone Time)
 
@@ -334,6 +342,8 @@ import { TimePicker } from "react-fhk-datepicker";
 - `disabled`: Disable the picker
 - `error`: Show error state styling
 - `helperText`: Helper text below input
+- `bgColorLight`: Custom background color for light mode (optional)
+- `bgColorDark`: Custom background color for dark mode (optional)
 
 ## 🎨 UI Features
 
@@ -405,7 +415,9 @@ All components feature a clean, professional interface without cluttered display
 />
 ```
 
-### Theme Support
+### Theme Support & Custom Background Color
+
+You can control the theme and background color of the picker container:
 
 ```jsx
 // Light theme (default)
@@ -413,7 +425,21 @@ All components feature a clean, professional interface without cluttered display
 
 // Dark theme
 <DatePicker theme="dark" />
+
+// Custom background colors for each mode
+<DatePicker
+  theme="dark"
+  bgColorDark="#232946"
+  bgColorLight="#f4faff"
+/>
 ```
+
+**Props:**
+
+- `bgColorLight`: Custom background color for light mode (optional)
+- `bgColorDark`: Custom background color for dark mode (optional)
+
+This works for all pickers: `DatePicker`, `DateRangePicker`, `DateTimePicker`, `DateTimeRangePicker`, and `TimePicker`.
 
 ## 📊 Data Formats
 

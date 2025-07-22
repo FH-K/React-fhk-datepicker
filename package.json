@@ -1,6 +1,6 @@
 {
   "name": "react-fhk-datepicker",
-  "version": "1.3.25",
+  "version": "1.3.26",
   "description": "A comprehensive React date and time picker library with multiple components, enhanced UI/UX, and timezone-safe date selection",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

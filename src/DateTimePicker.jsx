@@ -26,6 +26,8 @@ const DateTimePicker = ({
   helperText = "",
   timeFormat = "24", // "12" or "24"
   timeStep = "1", // "1" for seconds, "60" for minutes only
+  bgColorLight,
+  bgColorDark,
 }) => {
   const [dateValue, setDateValue] = useState(date || "");
   const [timeValue, setTimeValue] = useState(time || "");
@@ -73,7 +75,13 @@ const DateTimePicker = ({
   }, [time]);
 
   return (
-    <div className={`${className}`}>
+    <div
+      className={`${className}`}
+      style={{
+        background:
+          theme === "dark" ? bgColorDark || "#1f2937" : bgColorLight || "#fff",
+      }}
+    >
       {/* Responsive Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Date Picker */}

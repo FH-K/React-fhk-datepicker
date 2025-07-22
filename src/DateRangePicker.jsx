@@ -23,6 +23,8 @@ const DateRangePicker = ({
   autoFocus = false,
   error = false,
   helperText = "",
+  bgColorLight,
+  bgColorDark,
 }) => {
   const [startDateValue, setStartDateValue] = useState(startDate || "");
   const [endDateValue, setEndDateValue] = useState(endDate || "");
@@ -159,7 +161,13 @@ const DateRangePicker = ({
   }, [endDate]);
 
   return (
-    <div className={`${className}`}>
+    <div
+      className={`${className}`}
+      style={{
+        background:
+          theme === "dark" ? bgColorDark || "#1f2937" : bgColorLight || "#fff",
+      }}
+    >
       {/* Responsive Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Start Date */}
